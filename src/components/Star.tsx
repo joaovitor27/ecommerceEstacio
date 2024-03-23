@@ -1,22 +1,26 @@
 import React from 'react';
 import {Image, StyleSheet, TouchableOpacity} from 'react-native';
 
-import starImage from '../assets/estrela.png';
-import starEmptyImage from '../assets/estrelaCinza.png';
+interface StarProps {
+  onPress: () => void;
+  completed: boolean;
+  editable?: boolean;
+  big?: boolean;
+}
 
 export default function Star({
   onPress,
   completed,
   editable = true,
   big = false,
-}) {
+}: StarProps) {
   const styles = stylesFunction(big);
 
   function getImage() {
     if (completed) {
-      return starImage;
+      return require('../assets/estrela.png');
     }
-    return starEmptyImage;
+    return require('../assets/estrelaCinza.png');
   }
 
   return (

@@ -5,7 +5,7 @@ import Home from './src/screens/Home';
 function App() {
   return (
     <SafeAreaView style={styles.screen}>
-      <Home />
+      <Home/>
     </SafeAreaView>
   );
 }

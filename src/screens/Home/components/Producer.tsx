@@ -1,15 +1,22 @@
-import React, {useState} from 'react';
+import React, {useMemo, useReducer} from 'react';
 import {ProducerData} from '../../../models/ProducerData.tsx';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Stars from '../../../components/Stars.tsx';
 
 export default function Producer(producerData: ProducerData) {
-  const [selected, setSelected] = useState(false);
+  const [selected, invert] = useReducer(selected_ => !selected_, false);
+
+  function distanceMeters(distance: number): string {
+    return `${distance}m`;
+  }
+
+  const distance = useMemo(
+    () => distanceMeters(producerData.distance),
+    [producerData.distance],
+  );
 
   return (
-    <TouchableOpacity
-      style={styles.card}
-      onPress={() => setSelected(!selected)}>
+    <TouchableOpacity style={styles.card} onPress={invert}>
       <Image
         style={styles.image}
         source={producerData.image}
@@ -24,7 +31,7 @@ export default function Producer(producerData: ProducerData) {
             big={selected}
           />
         </View>
-        <Text>{producerData.distance}</Text>
+        <Text>{distance}</Text>
       </View>
     </TouchableOpacity>
   );

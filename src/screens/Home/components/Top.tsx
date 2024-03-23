@@ -1,6 +1,5 @@
 import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
-import logo from '../../../assets/logo.png';
 import {getTop} from '../../../services/top.tsx';
 
 class Top extends React.Component {
@@ -22,7 +21,10 @@ class Top extends React.Component {
   render() {
     return (
       <View style={styles.top}>
-        <Image source={logo} style={styles.imagem} />
+        <Image
+          source={require('../../../assets/logo.png')}
+          style={styles.imagem}
+        />
         <Text style={styles.welcome}>{this.state.top.welcome}</Text>
         <Text style={styles.subtitle}>{this.state.top.subtitle}</Text>
       </View>

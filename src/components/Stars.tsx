@@ -2,7 +2,13 @@ import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import Star from './Star.tsx';
 
-export default function Stars({quantity, editable = false, big = false}) {
+interface StarsProps {
+  quantity: number;
+  editable?: boolean;
+  big?: boolean;
+}
+
+export default function Stars({quantity, editable = false, big = false,}: StarsProps) {
   const [quantityStar, setQuantityStar] = useState<number>(quantity);
 
   function renderStars() {

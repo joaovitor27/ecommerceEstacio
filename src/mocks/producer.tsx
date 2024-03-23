@@ -1,8 +1,3 @@
-import green from '../assets/producers/green.png';
-import grow from '../assets/producers/grow.png';
-import potager from '../assets/producers/potager.png';
-import jennyJack from '../assets/producers/jennyJack.png';
-import salad from '../assets/producers/salad.png';
 import {Producer} from '../models/Producer.tsx';
 
 function randomNumberGenerator(min: number, max: number) {
@@ -15,36 +10,36 @@ const producer: Producer = {
     {
       id: 1,
       name: 'Green',
-      image: green,
-      distance: `${randomNumberGenerator(1, 500)} m`,
+      image: require('../assets/producers/green.png'),
+      distance: randomNumberGenerator(1, 500),
       stars: randomNumberGenerator(1, 5),
     },
     {
       id: 2,
       name: 'Salad',
-      image: salad,
-      distance: `${randomNumberGenerator(1, 500)} m`,
+      image: require('../assets/producers/salad.png'),
+      distance: randomNumberGenerator(1, 500),
       stars: randomNumberGenerator(1, 5),
     },
     {
       id: 3,
       name: 'Potager',
-      image: potager,
-      distance: `${randomNumberGenerator(1, 500)} m`,
+      image: require('../assets/producers/potager.png'),
+      distance: randomNumberGenerator(1, 500),
       stars: randomNumberGenerator(1, 5),
     },
     {
       id: 4,
       name: 'Grow',
-      image: grow,
-      distance: `${randomNumberGenerator(1, 500)} m`,
+      image: require('../assets/producers/grow.png'),
+      distance: randomNumberGenerator(1, 500),
       stars: randomNumberGenerator(1, 5),
     },
     {
       id: 5,
       name: 'Jenny Jack',
-      image: jennyJack,
-      distance: `${randomNumberGenerator(1, 500)} m`,
+      image: require('../assets/producers/jennyJack.png'),
+      distance: randomNumberGenerator(1, 500),
       stars: randomNumberGenerator(1, 5),
     },
   ],

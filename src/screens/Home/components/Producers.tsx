@@ -1,19 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {FlatList, StyleSheet, Text} from 'react-native';
-import {getProducer} from '../../../services/producer.tsx';
-import {ProducerData} from '../../../models/ProducerData.tsx';
 import Top from './Top.tsx';
 import Producer from './Producer.tsx';
+import useProducers from '../../../hooks/userProducers.tsx';
 
 export default function Producers() {
-  const [title, setTitle] = useState<string>('');
-  const [producers, setProducers] = useState<ProducerData[]>([]);
-
-  useEffect(() => {
-    const result = getProducer();
-    setTitle(result.title);
-    setProducers(result.data);
-  }, []);
+  const [title, producers] = useProducers();
 
   function topList() {
     return (

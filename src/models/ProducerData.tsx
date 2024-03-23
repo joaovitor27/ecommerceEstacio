@@ -4,6 +4,6 @@ export interface ProducerData {
   id: number;
   name: string;
   image: ImageSourcePropType;
-  distance: string;
+  distance: number;
   stars: number;
 }
