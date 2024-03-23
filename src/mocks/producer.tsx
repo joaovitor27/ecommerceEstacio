@@ -42,6 +42,27 @@ const producer: Producer = {
       distance: randomNumberGenerator(1, 500),
       stars: randomNumberGenerator(1, 5),
     },
+    {
+      id: 6,
+      name: 'Potager',
+      image: require('../assets/producers/potager.png'),
+      distance: randomNumberGenerator(1, 500),
+      stars: randomNumberGenerator(1, 5),
+    },
+    {
+      id: 7,
+      name: 'Green',
+      image: require('../assets/producers/green.png'),
+      distance: randomNumberGenerator(1, 500),
+      stars: randomNumberGenerator(1, 5),
+    },
+    {
+      id: 8,
+      name: 'Grow',
+      image: require('../assets/producers/grow.png'),
+      distance: randomNumberGenerator(1, 500),
+      stars: randomNumberGenerator(1, 5),
+    },
   ],
 };
 
