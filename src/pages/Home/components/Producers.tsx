@@ -3,14 +3,20 @@ import {FlatList, StyleSheet, Text} from 'react-native';
 import Top from './Top.tsx';
 import Producer from './Producer.tsx';
 import useProducers from '../../../hooks/userProducers.tsx';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../../../routers/types-router.ts';
 
-export default function Producers() {
+interface ProducersProps {
+  navigation: StackNavigationProp<RootStackParamList>;
+}
+
+export default function Producers({navigation}: ProducersProps) {
   const [title, producers] = useProducers();
 
   function topList() {
     return (
       <>
-        <Top />
+        <Top/>
         <Text style={styles.title}>{title}</Text>
       </>
     );
@@ -19,7 +25,10 @@ export default function Producers() {
   return (
     <FlatList
       data={producers}
-      renderItem={({item}) => <Producer {...item} />}
+      renderItem={({item}) => {
+
+        return <Producer navigation={navigation} producerData={item}/>
+      }}
       keyExtractor={item => String(item.id)}
       ListHeaderComponent={topList}
     />

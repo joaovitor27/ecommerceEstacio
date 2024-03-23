@@ -19,6 +19,7 @@ module.exports = {
   ],
   rules: {
     '@typescript-eslint/no-unused-vars': 'error',
-    // Outras regras
+    quotes: ['error', 'single', { 'allowTemplateLiterals': true }],
+    '@typescript-eslint/no-var-requires': 'off',
   },
 };

@@ -1,10 +1,16 @@
-import React, {useMemo, useReducer} from 'react';
+import React, {useMemo} from 'react';
 import {ProducerData} from '../../../models/ProducerData.tsx';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Stars from '../../../components/Stars.tsx';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../../../routers/types-router.ts';
 
-export default function Producer(producerData: ProducerData) {
-  const [selected, invert] = useReducer(selected_ => !selected_, false);
+interface ProducerProps {
+  navigation: StackNavigationProp<RootStackParamList>;
+  producerData: ProducerData;
+}
+
+export default function Producer({navigation, producerData}: ProducerProps) {
 
   function distanceMeters(distance: number): string {
     return `${distance}m`;
@@ -15,8 +21,13 @@ export default function Producer(producerData: ProducerData) {
     [producerData.distance],
   );
 
+  const handleProducer = () => {
+    navigation.navigate('Producer', {producerData: producerData});
+  };
+
+
   return (
-    <TouchableOpacity style={styles.card} onPress={invert}>
+    <TouchableOpacity style={styles.card} onPress={handleProducer}>
       <Image
         style={styles.image}
         source={producerData.image}
@@ -27,8 +38,6 @@ export default function Producer(producerData: ProducerData) {
           <Text style={styles.name}>{producerData.name}</Text>
           <Stars
             quantity={producerData.stars}
-            editable={selected}
-            big={selected}
           />
         </View>
         <Text>{distance}</Text>

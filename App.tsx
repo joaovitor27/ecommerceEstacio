@@ -1,19 +1,10 @@
 import React from 'react';
-import {SafeAreaView} from 'react-native';
-import Home from './src/screens/Home';
+import Navigation from './src/routers/navigation.tsx';
 
 function App() {
   return (
-    <SafeAreaView style={styles.screen}>
-      <Home/>
-    </SafeAreaView>
+    <Navigation/>
   );
 }
-
-const styles = {
-  screen: {
-    flex: 1,
-  },
-};
 
 export default App;
