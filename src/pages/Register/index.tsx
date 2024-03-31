@@ -2,24 +2,50 @@ import React from 'react';
 import {StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../routers/types-router.ts';
+import {registerUser} from '../../services/firebase/Auth.tsx';
 
-interface RegisterProps {
+interface SignupProps {
   navigation: StackNavigationProp<RootStackParamList>;
 }
 
-export default function Register({navigation}: RegisterProps) {
-
+export default function Signup({navigation}: SignupProps) {
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [confirmPassword, setConfirmPassword] = React.useState('');
+  const [passwordError, setPasswordError] = React.useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = React.useState('');
 
-  const handleRegister = () => {
-    // Implemente a lógica de cadastro aqui
-    console.log('Name:', name);
-    console.log('Email:', email);
-    console.log('Password:', password);
-    // Redirecionar para a próxima tela após o cadastro
-    navigation.navigate('Login');
+  const handleNameChange = (text: string) => {
+    setName(text);
+  };
+
+  const handleEmailChange = (text: string) => {
+    setEmail(text);
+  };
+
+  const handlePasswordChange = (text: string) => {
+    setPassword(text);
+    setPasswordError(text.length < 6 ? 'A senha deve ter no mínimo 6 caracteres.' : '');
+    setConfirmPasswordError(confirmPassword !== text ? 'As senhas não coincidem.' : '');
+  };
+
+  const handleConfirmPasswordChange = (text: string) => {
+    setConfirmPassword(text);
+    setConfirmPasswordError(password !== text ? 'As senhas não coincidem.' : '');
+  };
+
+  const handleSignup = () => {
+    if (password.length < 6 || password !== confirmPassword) {
+      return;
+    }
+
+    registerUser(email, password).then(() => {
+      console.log('Usuário cadastrado com sucesso!');
+      navigation.navigate('Login');
+    }).catch((error) => {
+      console.log('Erro ao cadastrar usuário:', error);
+    });
   };
 
   return (
@@ -28,24 +54,37 @@ export default function Register({navigation}: RegisterProps) {
       <TextInput
         style={styles.input}
         placeholder="Nome"
-        onChangeText={setName}
+        onChangeText={handleNameChange}
         value={name}
+        placeholderTextColor="#727373"
       />
       <TextInput
         style={styles.input}
         placeholder="Email"
-        onChangeText={setEmail}
+        onChangeText={handleEmailChange}
         value={email}
+        placeholderTextColor="#727373"
         keyboardType="email-address"
       />
       <TextInput
-        style={styles.input}
+        style={[styles.input, passwordError ? styles.inputError : null]}
         placeholder="Senha"
-        onChangeText={setPassword}
+        onChangeText={handlePasswordChange}
         value={password}
+        placeholderTextColor="#727373"
         secureTextEntry
       />
-      <TouchableOpacity style={styles.button} onPress={handleRegister}>
+      {passwordError ? <Text style={styles.errorMessage}>{passwordError}</Text> : null}
+      <TextInput
+        style={[styles.input, confirmPasswordError ? styles.inputError : null]}
+        placeholder="Confirmar Senha"
+        onChangeText={handleConfirmPasswordChange}
+        value={confirmPassword}
+        placeholderTextColor="#727373"
+        secureTextEntry
+      />
+      {confirmPasswordError ? <Text style={styles.errorMessage}>{confirmPasswordError}</Text> : null}
+      <TouchableOpacity style={styles.button} onPress={handleSignup} disabled={!!(passwordError || confirmPasswordError)}>
         <Text style={styles.buttonText}>Cadastrar</Text>
       </TouchableOpacity>
     </View>
@@ -63,14 +102,16 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+    color: '#008080',
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    paddingHorizontal: 10,
     borderRadius: 5,
-    padding: 10,
+    borderColor: '#727373',
     marginBottom: 10,
     width: '80%',
+    height: 50,
   },
   button: {
     backgroundColor: '#008080',
@@ -85,5 +126,14 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  errorMessage: {
+    color: 'red',
+    marginBottom: 10,
+    width: '80%',
+    textAlign: 'left',
+  },
+  inputError: {
+    borderColor: 'red',
   },
 });

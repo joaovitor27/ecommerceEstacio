@@ -7,4 +7,5 @@ export type RootStackParamList = {
   Register: undefined;
   Producer: { producerData: ProducerData };
   Profiler: { userId: string };
+  Tab: undefined;
 };
