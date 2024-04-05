@@ -5,12 +5,13 @@ import {Text} from 'react-native';
 
 interface ProductsProps {
   navigation: StackNavigationProp<RootStackParamList>;
+  productData: any;
 }
 
-export default function Products({navigation}: ProductsProps) {
+export default function Products({navigation, productData}: ProductsProps) {
   return (
     <>
-      <Text>Products</Text>
+      <Text>{productData}</Text>
     </>
   );
 }

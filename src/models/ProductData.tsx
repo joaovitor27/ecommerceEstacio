@@ -1,6 +1,6 @@
 import {ImageSourcePropType} from 'react-native';
 
-export interface ProducerData {
+export interface ProductData {
   id: number;
   name: string;
   image: ImageSourcePropType;

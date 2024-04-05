@@ -26,7 +26,6 @@ export default function Producers({navigation}: ProducersProps) {
     <FlatList
       data={producers}
       renderItem={({item}) => {
-
         return <Producer navigation={navigation} producerData={item}/>
       }}
       keyExtractor={item => String(item.id)}
