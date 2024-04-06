@@ -10,5 +10,5 @@ export type RootStackParamList = {
   Profiler: { userId: string };
   Tab: undefined;
   Products: undefined;
-  Product: { productData: ProductData };
+  Product: { productData: ProductData | undefined };
 };

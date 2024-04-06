@@ -17,17 +17,17 @@ export default function Product({route, navigation}: ProductProps) {
   const {productData} = route.params;
 
   function getUnidatePrice() {
-    return productData.unidade_price === 'KILO'? 'por kg' : 'unidade';
+    return productData?.unidade_price === 'KILO'? 'por kg' : 'unidade';
   }
 
   return (
     <View style={styles.container}>
       <View style={styles.detailsContainer}>
-        <Text style={styles.name}>{productData.name}</Text>
-        <Text> {productData.description} </Text>
-        <Text> Preço: {productData.price} {getUnidatePrice()}</Text>
-        <Stars quantity={productData.stars}/>
-        <Text>Distance: {productData.distance} m</Text>
+        <Text style={styles.name}>{productData?.name}</Text>
+        <Text> {productData?.description} </Text>
+        <Text> Preço: {productData?.price} {getUnidatePrice()}</Text>
+        <Stars quantity={productData?.stars}/>
+        <Text>Distance: {productData?.distance} m</Text>
       </View>
     </View>
   );
