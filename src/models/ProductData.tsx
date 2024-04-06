@@ -1,12 +1,14 @@
 import {ImageSourcePropType} from 'react-native';
 
 export interface ProductData {
-  id: number;
+  id: string;
   name: string;
   image: ImageSourcePropType;
   distance: number;
   stars: number;
-  cnpj: string;
   description: string;
-  products: any[];
+  price: number;
+  producer: string;
+  quantity: number;
+  unidade_price: string;
 }

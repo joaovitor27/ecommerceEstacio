@@ -1,5 +1,4 @@
-import firestore from '@react-native-firebase/firestore';
-
+import firestore, {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 
 
 export default class Firestore {
@@ -14,8 +13,12 @@ export default class Firestore {
     this._collectionPath = collectionPath;
   }
 
-  async findAll() {
-    const results = await firestore().collection(this.collectionPath).get();
+  async findAll(filters?: FirebaseFirestoreTypes.QueryFilterConstraint | FirebaseFirestoreTypes.QueryCompositeFilterConstraint): Promise<FirebaseFirestoreTypes.DocumentData[]> {
+    if (!filters) {
+      const results = await firestore().collection(this.collectionPath).get();
+      return results.docs.map((doc) => doc.data());
+    }
+    const results = await firestore().collection(this.collectionPath).where(filters).get();
     return results.docs.map((doc) => doc.data());
   }
 

@@ -4,8 +4,8 @@ import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../routers/types-router';
 import Stars from '../../components/Stars.tsx';
-import Products from '../Products';
 import userProducts from '../../hooks/userProducts.ts';
+import ProductsToProducer from './Components/ProductsToProducer.tsx';
 
 type ProducerScreenRouteProp = RouteProp<RootStackParamList, 'Producer'>;
 type ProducerScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Producer'>;
@@ -17,7 +17,6 @@ interface ProducerProps {
 
 export default function Producer({route, navigation}: ProducerProps) {
   const {producerData} = route.params;
-  const [title, products] = userProducts();
 
   function topList() {
     return (
@@ -40,7 +39,7 @@ export default function Producer({route, navigation}: ProducerProps) {
     <FlatList
       data={producerData.products}
       renderItem={({item}) => {
-        return <Products navigation={navigation} productData={item}/>
+        return <ProductsToProducer navigation={navigation} productData={item}/>
       }}
       keyExtractor={item => String(item.id)}
       ListHeaderComponent={topList}

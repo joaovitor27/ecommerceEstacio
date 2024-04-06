@@ -1,4 +1,5 @@
 import {ProducerData} from '../models/ProducerData.tsx';
+import {ProductData} from '../models/ProductData.tsx';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -8,4 +9,6 @@ export type RootStackParamList = {
   Producer: { producerData: ProducerData };
   Profiler: { userId: string };
   Tab: undefined;
+  Products: undefined;
+  Product: { productData: ProductData };
 };
