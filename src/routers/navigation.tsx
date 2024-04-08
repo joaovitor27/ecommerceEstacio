@@ -12,6 +12,7 @@ import InitialPage from '../pages/IntialPage';
 import Products from '../pages/Products';
 import {Image} from 'react-native';
 import Profile from '../pages/Profile';
+import Product from '../pages/Product';
 
 const Stack = createStackNavigator();
 
@@ -48,6 +49,8 @@ export default function Navigation() {
         <Stack.Screen name='Register' component={Register}/>
         <Stack.Screen name='Tab' component={TabsRoutes}/>
         <Stack.Screen name='Producer' component={Producer as React.ComponentType}/>
+        <Stack.Screen name='Product' component={Product as React.ComponentType}/>
+        
       </Stack.Navigator>
     </NavigationContainer>
   );

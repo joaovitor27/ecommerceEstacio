@@ -3,13 +3,13 @@ import {StyleSheet, View} from 'react-native';
 import Star from './Star.tsx';
 
 interface StarsProps {
-  quantity: number;
+  quantity: number | undefined;
   editable?: boolean;
   big?: boolean;
 }
 
 export default function Stars({quantity, editable = false, big = false,}: StarsProps) {
-  const [quantityStar, setQuantityStar] = useState<number>(quantity);
+  const [quantityStar, setQuantityStar] = useState<number | undefined>(quantity);
 
   function renderStars() {
     const stars = [];
@@ -17,7 +17,7 @@ export default function Stars({quantity, editable = false, big = false,}: StarsP
       stars.push(
         <Star
           onPress={() => setQuantityStar(i + 1)}
-          completed={i < quantityStar}
+          completed={i < (quantityStar !== undefined ? quantityStar : 0)}
           editable={editable}
           big={big}
           key={i}

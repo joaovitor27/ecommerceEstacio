@@ -36,7 +36,6 @@ export default function Login({navigation}: LoginProps) {
     }
 
     login(email, password).then(() => {
-      console.log('Login realizado com sucesso!');
       navigation.navigate('Tab');
     }).catch((error) => {
       if (error.code === 'auth/user-not-found') {

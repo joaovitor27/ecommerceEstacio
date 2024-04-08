@@ -25,8 +25,8 @@ class Top extends React.Component {
           source={require('../../../assets/logo.png')}
           style={styles.imagem}
         />
-        <Text style={styles.welcome}>{this.state.top.welcome}</Text>
-        <Text style={styles.subtitle}>{this.state.top.subtitle}</Text>
+        <Text style={styles.welcome}>Produtores</Text>
+        <Text style={styles.subtitle}>Encontre os melhores produtores</Text>
       </View>
     );
   }
