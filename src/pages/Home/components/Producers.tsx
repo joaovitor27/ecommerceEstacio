@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList, StyleSheet, Text} from 'react-native';
+import {FlatList} from 'react-native';
 import Top from './Top.tsx';
 import Producer from './Producer.tsx';
 import useProducers from '../../../hooks/userProducers.tsx';
@@ -11,13 +11,12 @@ interface ProducersProps {
 }
 
 export default function Producers({navigation}: ProducersProps) {
-  const [title, producers] = useProducers();
+  const [producers] = useProducers();
 
   function topList() {
     return (
       <>
         <Top/>
-        <Text style={styles.title}>{title}</Text>
       </>
     );
   }
@@ -28,19 +27,8 @@ export default function Producers({navigation}: ProducersProps) {
       renderItem={({item}) => {
         return <Producer navigation={navigation} producerData={item}/>
       }}
-      keyExtractor={item => String(item.id)}
+      keyExtractor={item => String(item.cnpj)}
       ListHeaderComponent={topList}
     />
   );
 }
-
-const styles = StyleSheet.create({
-  title: {
-    fontSize: 20,
-    lineHeight: 32,
-    marginHorizontal: 16,
-    marginTop: 16,
-    fontWeight: 'bold',
-    color: '#464646',
-  },
-});

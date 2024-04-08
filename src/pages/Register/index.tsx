@@ -41,7 +41,6 @@ export default function Signup({navigation}: SignupProps) {
     }
 
     registerUser(email, password).then(() => {
-      console.log('Usuário cadastrado com sucesso!');
       navigation.navigate('Login');
     }).catch((error) => {
       console.log('Erro ao cadastrar usuário:', error);

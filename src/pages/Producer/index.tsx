@@ -4,7 +4,7 @@ import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../routers/types-router';
 import Stars from '../../components/Stars.tsx';
-import ProductsToProducer from './Components/ProductsToProducer.tsx';
+import ItemProduct from '../Products/Components/ItemProduct.tsx';
 
 type ProducerScreenRouteProp = RouteProp<RootStackParamList, 'Producer'>;
 type ProducerScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Producer'>;
@@ -21,11 +21,15 @@ export default function Producer({route, navigation}: ProducerProps) {
     return `${cnpj.substring(0, 2)}.${cnpj.substring(2, 5)}.${cnpj.substring(5, 8)}/${cnpj.substring(8, 12)}-${cnpj.substring(12, 14)}`;
   }
 
+  function getImage() {
+    return producerData.image ? {uri: producerData.image} : require('../../assets/profile.png');
+  }
+
   function topList() {
     return (
       <View style={styles.container}>
         <View style={styles.topContainer}>
-          <Image source={producerData.image} style={styles.image}/>
+          <Image source={getImage()} style={styles.image}/>
           <View style={styles.detailsContainer}>
             <Text style={styles.name}>{producerData.name}</Text>
             <Text>Distance: {producerData.distance} m</Text>
@@ -44,7 +48,7 @@ export default function Producer({route, navigation}: ProducerProps) {
           <FlatList
             data={producerData.products}
             renderItem={({item}) => {
-              return <ProductsToProducer navigation={navigation} productData={item}/>
+              return <ItemProduct navigation={navigation} productData={item}/>
             }}
             keyExtractor={item => String(item.id)}
           />
@@ -57,6 +61,8 @@ export default function Producer({route, navigation}: ProducerProps) {
     <View style={styles.containerMain}>
       <FlatList
         ListHeaderComponent={topList}
+        data={null}
+        renderItem={null}
       />
     </View>
   );
@@ -65,7 +71,6 @@ export default function Producer({route, navigation}: ProducerProps) {
 const styles = StyleSheet.create({
   containerMain: {
     flex: 1,
-    backgroundColor: '#fff',
   },
   container: {
     flex: 1,
@@ -94,7 +99,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   descriptionContainer: {
-    backgroundColor: '#efeded', // Cor de fundo destacada
+    backgroundColor: '#008080', // Cor de fundo destacada
     padding: 10,
     marginBottom: 20,
     borderRadius: 5,
@@ -103,9 +108,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: '#fff',
   },
   description: {
     fontSize: 16,
+    color: '#fff',
   },
   productsContainer: {
     backgroundColor: '#f9f9f9', // Cor de fundo destacada para produtos

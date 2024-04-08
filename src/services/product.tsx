@@ -15,7 +15,7 @@ export default class ProductService extends Firestore {
       return result.map((product) => ({
         id: product.id,
         name: product.name,
-        image: require('../../src/assets/profile.png'),
+        image: product.image,
         distance: randomNumberGenerator(1, 500),
         stars: randomNumberGenerator(1, 5),
         description: product.description,
@@ -32,7 +32,7 @@ export default class ProductService extends Firestore {
       return ({
         id: product?.id,
         name: product?.name,
-        image: require('../../src/assets/profile.png'),
+        image: product?.image,
         distance: randomNumberGenerator(1, 500),
         stars: randomNumberGenerator(1, 5),
         description: product?.description,

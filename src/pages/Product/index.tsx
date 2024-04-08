@@ -23,6 +23,7 @@ export default function Product({route, navigation}: ProductProps) {
   return (
     <View style={styles.container}>
       <View style={styles.detailsContainer}>
+        <Image source={{uri: productData?.image}} style={styles.image}/>
         <Text style={styles.name}>{productData?.name}</Text>
         <Text> {productData?.description} </Text>
         <Text> Preço: {productData?.price} {getUnidatePrice()}</Text>

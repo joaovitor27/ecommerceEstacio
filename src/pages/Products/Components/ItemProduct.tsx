@@ -6,15 +6,19 @@ import {ProductData} from '../../../models/ProductData.tsx';
 import ProductService from '../../../services/product.tsx';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-interface ProductsToProducerProps {
+interface ItemProductProps {
   navigation: StackNavigationProp<RootStackParamList>;
   productData: ProductData;
 }
 
-export default function ProductsToProducer({navigation, productData}: ProductsToProducerProps) {
+export default function ItemProduct({navigation, productData}: ItemProductProps) {
   const [product, setProduct] = useState<ProductData>();
 
   useEffect(() => {
+    if (!productData.id) {
+      setProduct(productData);
+      return;
+    }
     const productService = new ProductService()
     productService.findId(productData.id).then((result) => {
       setProduct(result);
@@ -24,11 +28,11 @@ export default function ProductsToProducer({navigation, productData}: ProductsTo
 
   function getDescrition() {
     if (!product) return '';
-    return product.description.length > 50 ? `${product.description.substring(0, 50)}...` : product.description;
+    return product.description.length > 30 ? `${product.description.substring(0, 30)}...` : product.description;
   }
 
   function getUnidatePrice() {
-    return product?.unidade_price === 'KILO' ? 'por kg' : 'unidade';
+    return product?.unidade_price === 'KILO' ? 'por kg' : 'por unidade';
   }
 
   function formatPrice(price?: number) {
@@ -36,10 +40,14 @@ export default function ProductsToProducer({navigation, productData}: ProductsTo
     return price.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
   }
 
+  function getImage() {
+    return product?.image ? {uri: product.image} : require('../../../assets/profile.png');
+  }
+
   return (
     <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('Product', {productData: product})}>
       <View style={styles.imageContainer}>
-        <Image source={require('../../../assets/profile.png')} style={styles.image}/>
+        <Image source={getImage()} style={styles.image}/>
       </View>
       <View style={styles.infoContainer}>
         <Text style={styles.name}>{product?.name}</Text>
@@ -51,7 +59,7 @@ export default function ProductsToProducer({navigation, productData}: ProductsTo
       </View>
       <View style={styles.iconContainer}>
         <TouchableOpacity style={styles.iconContainer}>
-          <Icon name="shopping-cart" size={20} color={'#008080'}/>
+          <Icon name="shopping-cart" size={22} color={'#008080'}/>
         </TouchableOpacity>
       </View>
     </TouchableOpacity>
@@ -60,7 +68,7 @@ export default function ProductsToProducer({navigation, productData}: ProductsTo
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: '#F6F6F6',
     marginVertical: 8,
     marginHorizontal: 16,
     borderRadius: 8,
@@ -80,6 +88,8 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 5,
+    borderWidth: 1,
+    borderColor: 'rgba(0,128,128,0.32)',
   },
   infoContainer: {
     flex: 1,

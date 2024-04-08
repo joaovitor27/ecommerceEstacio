@@ -1,20 +1,18 @@
 import {useEffect, useState} from 'react';
 import {ProductData} from '../models/ProductData.tsx';
 import ProductService from '../services/product.tsx';
-import {Filter} from '@react-native-firebase/firestore';
 
-export default function userProducts(productId: string): [string, ProductData[]] {
-  const [title, setTitle] = useState<string>('');
-  const [producers, setProducers] = useState<ProductData[]>([]);
+
+export default function userProducts(): [ProductData[]] {
+  const [products, setProducts] = useState<ProductData[]>([]);
 
   useEffect(() => {
     const productService = new ProductService()
-    productService.findId(productId).then((result) => {
-      setTitle('Produtos');
-      setProducers(result);
+    productService.findAll().then((result) => {
+      setProducts(result);
     });
 
   }, []);
 
-  return [title, producers];
+  return [products];
 }

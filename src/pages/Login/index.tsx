@@ -10,8 +10,8 @@ interface LoginProps {
 }
 
 export default function Login({navigation}: LoginProps) {
-  const [email, setEmail] = React.useState('joao@gmail.com');
-  const [password, setPassword] = React.useState('12345678');
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
   const [showPassword, setShowPassword] = React.useState(false);
   const [emailError, setEmailError] = React.useState('');
   const [passwordError, setPasswordError] = React.useState('');
@@ -36,7 +36,6 @@ export default function Login({navigation}: LoginProps) {
     }
 
     login(email, password).then(() => {
-      console.log('Login realizado com sucesso!');
       navigation.navigate('Tab');
     }).catch((error) => {
       if (error.code === 'auth/user-not-found') {

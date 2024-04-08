@@ -25,17 +25,28 @@ export default function Producer({navigation, producerData}: ProducerProps) {
     navigation.navigate('Producer', {producerData: producerData});
   };
 
+  function getImage() {
+    return producerData.image ? {uri: producerData.image} : require('../../../assets/profile.png');
+  }
+
+  function getDescrition() {
+    return producerData.description.length > 30 ? `${producerData.description.substring(0, 30)}...` : producerData.description;
+  }
+
 
   return (
     <TouchableOpacity style={styles.card} onPress={handleProducer}>
+      <View style={styles.imageContainer}>
       <Image
         style={styles.image}
-        source={producerData.image}
+        source={getImage()}
         accessibilityLabel={producerData.name}
       />
+        </View>
       <View style={styles.information}>
         <View>
           <Text style={styles.name}>{producerData.name}</Text>
+          <Text style={styles.description}>{getDescrition()}</Text>
           <Stars
             quantity={producerData.stars}
           />
@@ -59,12 +70,23 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.23,
     shadowRadius: 2.62,
   },
+  description: {
+    color: '#a0a1a1',
+    fontSize: 10,
+    marginBottom: 5,
+  },
+
+  imageContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+  },
   image: {
-    width: 48,
-    height: 48,
-    borderRadius: 6,
-    marginVertical: 16,
-    marginLeft: 16,
+    width: 60,
+    height: 60,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: 'rgba(0,128,128,0.32)',
   },
   information: {
     flex: 1,

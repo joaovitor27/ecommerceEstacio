@@ -13,7 +13,7 @@ export default class ProducerService extends Firestore {
       return result.map((producer) => ({
         id: producer.id,
         name: producer.name,
-        image: require('../../src/assets/profile.png'),
+        image: producer.image,
         distance: randomNumberGenerator(1, 500),
         stars: randomNumberGenerator(1, 5),
         cnpj: producer.cnpj,
