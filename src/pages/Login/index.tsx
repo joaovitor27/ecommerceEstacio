@@ -126,6 +126,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: '80%',
     height: 50,
+    color: '#696969',
   },
   passwordInput: {
     flex: 1,
@@ -134,6 +135,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     borderColor: '#727373',
+    color: '#696969',
   },
   button: {
     backgroundColor: '#008080',

@@ -20,7 +20,7 @@ export default function InitialPage({navigation: navigate}: InitialPageProps) {
     <>
       <View style={styles.container}>
         <View style={styles.top}>
-          <Image source={require('../../assets/logo.png')} style={styles.imagem}/>
+          <Image source={require('../../assets/logo_round.png')} style={styles.imagem}/>
         </View>
         <Text style={styles.title}>Bem-vindo ao E-Agro!</Text>
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
@@ -48,12 +48,13 @@ const styles = StyleSheet.create({
   },
   imagem: {
     width: 150,
-    height: 58,
+    height: 150,
   },
   title: {
-    fontSize: 24,
+    fontSize: 25,
     fontWeight: 'bold',
     marginBottom: 20,
+    color: '#696969',
   },
   button: {
     width: '80%',

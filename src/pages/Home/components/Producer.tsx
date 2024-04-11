@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import {ProducerData} from '../../../models/ProducerData.tsx';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import Stars from '../../../components/Stars.tsx';
+import Stars from '../../../Components/Stars.tsx';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../../routers/types-router.ts';
 
@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 22,
     fontWeight: 'bold',
+    color: '#696969',
   },
   distance: {
     fontSize: 12,

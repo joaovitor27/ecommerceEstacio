@@ -59,7 +59,7 @@ export default function ItemProduct({navigation, productData}: ItemProductProps)
       </View>
       <View style={styles.iconContainer}>
         <TouchableOpacity style={styles.iconContainer}>
-          <Icon name="shopping-cart" size={22} color={'#008080'}/>
+          <Icon name="shopping-cart" size={24} color={'#008080'}/>
         </TouchableOpacity>
       </View>
     </TouchableOpacity>

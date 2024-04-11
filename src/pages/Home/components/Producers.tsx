@@ -1,6 +1,6 @@
 import React from 'react';
 import {FlatList} from 'react-native';
-import Top from './Top.tsx';
+import Top from '../../../Components/Top.tsx';
 import Producer from './Producer.tsx';
 import useProducers from '../../../hooks/userProducers.tsx';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -16,7 +16,7 @@ export default function Producers({navigation}: ProducersProps) {
   function topList() {
     return (
       <>
-        <Top/>
+        <Top title={'Produtores'} subtitle={'Encontre os melhores produtores'}/>
       </>
     );
   }
