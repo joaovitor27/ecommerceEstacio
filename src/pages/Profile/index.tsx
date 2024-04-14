@@ -21,12 +21,12 @@ const ProfileHeader = () => (
 const Profile: React.FC<Props> = ({ navigation }) => {
   const options = [
   {
-        id: '1',
-        icon: 'shopping',
-        title: 'Meus Pedidos',
-        description: 'Visualize e acompanhe seus pedidos',
-        onPress: () => {},
-      },
+      id: '1',
+      icon: 'shopping-outline',
+      title: 'Meus Pedidos',
+      description: 'Visualize e acompanhe seus pedidos',
+      onPress: () => {navigation.navigate('MyPurchases')},
+    },
     {
       id: '2',
       icon: 'map-marker-outline',
