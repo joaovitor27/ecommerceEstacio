@@ -28,7 +28,7 @@ export default function ItemProduct({navigation, productData}: ItemProductProps)
 
   function getDescrition() {
     if (!product) return '';
-    return product.description.length > 30 ? `${product.description.substring(0, 30)}...` : product.description;
+    return product?.description?.length > 30 ? `${product.description.substring(0, 30)}...` : product.description;
   }
 
   function getUnidatePrice() {
