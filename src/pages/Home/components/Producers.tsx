@@ -4,7 +4,7 @@ import Top from '../../../Components/Top.tsx';
 import Producer from './Producer.tsx';
 import useProducers from '../../../hooks/userProducers.tsx';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../../../routers/types-router.ts';
+import {RootStackParamList} from '../../../routers/types-router.tsx';
 
 interface ProducersProps {
   navigation: StackNavigationProp<RootStackParamList>;

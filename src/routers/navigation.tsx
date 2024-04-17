@@ -12,6 +12,7 @@ import InitialPage from '../pages/IntialPage';
 import Products from '../pages/Products';
 import Profile from '../pages/Profile';
 import Product from '../pages/Product';
+import ShoppingCart from '../pages/ShoppingCart';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const Stack = createStackNavigator();
@@ -57,6 +58,24 @@ function TabsRoutes() {
         },
         tabBarIcon: () => (
           <Icon name={'boxes'} size={20} color={'#008080'}/>
+        )
+      }}/>
+      <Tab.Screen name="Carrinho" component={ShoppingCart} options={{
+        tabBarLabelStyle: {
+          fontSize: 10,
+          fontWeight: 'bold',
+          marginBottom: 5,
+        },
+        tabBarStyle: {
+          borderTopWidth: 1,
+          borderColor: '#008080',
+        },
+        tabBarActiveTintColor: '#008080',
+        tabBarInactiveTintColor: 'rgba(1,107,107,0.56)',
+        tabBarActiveBackgroundColor: '#ffffff',
+        tabBarInactiveBackgroundColor: '#efefef',
+        tabBarIcon: () => (
+          <Icon name={'shopping-cart'} size={20} color={'#008080'}/>
         )
       }}/>
       <Tab.Screen name="Perfil" component={Profile} options={{

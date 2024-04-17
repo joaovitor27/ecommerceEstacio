@@ -3,14 +3,14 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../routers/types-router.tsx';
 import {Text} from 'react-native';
 
-interface ProfileProps {
+interface ShoppingCartProps {
   navigation: StackNavigationProp<RootStackParamList>;
 }
 
-export default function Profile({navigation}: ProfileProps) {
+export default function ShoppingCart({navigation}: ShoppingCartProps) {
   return (
     <>
-      <Text>Perfil</Text>
+      <Text>Carrinho</Text>
     </>
   );
 }

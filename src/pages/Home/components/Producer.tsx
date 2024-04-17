@@ -3,7 +3,7 @@ import {ProducerData} from '../../../models/ProducerData.tsx';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Stars from '../../../Components/Stars.tsx';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../../../routers/types-router.ts';
+import {RootStackParamList} from '../../../routers/types-router.tsx';
 
 interface ProducerProps {
   navigation: StackNavigationProp<RootStackParamList>;

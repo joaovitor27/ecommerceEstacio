@@ -1,8 +1,8 @@
 import React from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../../routers/types-router.ts';
+import {RootStackParamList} from '../../routers/types-router.tsx';
 import {FlatList} from 'react-native';
-import userProducts from '../../hooks/userProducts.ts';
+import userProducts from '../../hooks/userProducts.tsx';
 import ItemProduct from './Components/ItemProduct.tsx';
 import Top from '../../Components/Top.tsx';
 
@@ -28,7 +28,7 @@ export default function Products({navigation}: ProductsProps) {
         renderItem={({item}) => {
           return <ItemProduct navigation={navigation} productData={item}/>
         }}
-        keyExtractor={item => String(item.image)}
+        keyExtractor={item => String(item.id)}
         ListHeaderComponent={topList()}
       />
     </>

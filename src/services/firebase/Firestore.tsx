@@ -1,29 +1,54 @@
 import firestore, {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
+import {Item} from './models/item.tsx';
 
-
-export default class Firestore {
-
-  private readonly _collectionPath: string;
-
-  get collectionPath(): string {
-    return this._collectionPath;
-  }
+export default class Firestore<T extends Item> {
+  private readonly collectionRef: FirebaseFirestoreTypes.CollectionReference;
 
   constructor(collectionPath: string) {
-    this._collectionPath = collectionPath;
+    this.collectionRef = firestore().collection(collectionPath);
   }
 
-  async findAll(filters?: FirebaseFirestoreTypes.QueryFilterConstraint | FirebaseFirestoreTypes.QueryCompositeFilterConstraint): Promise<FirebaseFirestoreTypes.DocumentData[]> {
-    if (!filters) {
-      const results = await firestore().collection(this.collectionPath).get();
-      return results.docs.map((doc) => doc.data());
+  async findAll(filters?: FirebaseFirestoreTypes.QueryFilterConstraint | FirebaseFirestoreTypes.QueryCompositeFilterConstraint): Promise<T[]> {
+    let results;
+    if (filters) {
+      results = await this.collectionRef.where(filters).get();
+    } else {
+      results = await this.collectionRef.get();
     }
-    const results = await firestore().collection(this.collectionPath).where(filters).get();
-    return results.docs.map((doc) => doc.data());
+    const items: T[] = [];
+
+    results.forEach(doc => {
+      const item = doc.data() as T;
+      item.id = doc.id;
+      items.push(item);
+    });
+    return items;
   }
 
-  async findId(id: string) {
-    const producer = await firestore().collection(this.collectionPath).doc(id).get();
-    return producer.data();
+
+  async findId(id: string): Promise<T | null> {
+    const docRef = this.collectionRef.doc(id);
+    const docSnapshot = await docRef.get();
+
+    if (!docSnapshot.exists) {
+      return null;
+    }
+
+    const item = docSnapshot.data() as T;
+    item.id = docSnapshot.id;
+    return item;
+  }
+
+  async add(item: T): Promise<void> {
+    await this.collectionRef.add(item);
+  }
+
+  async update(item: T): Promise<void> {
+    const docRef = this.collectionRef.doc(item.id);
+    await docRef.update(item);
+  }
+
+  async delete(id: string): Promise<void> {
+    await this.collectionRef.doc(id).delete();
   }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import Producers from './components/Producers.tsx';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../../routers/types-router.ts';
+import {RootStackParamList} from '../../routers/types-router.tsx';
 
 interface HomeProps {
   navigation: StackNavigationProp<RootStackParamList>;

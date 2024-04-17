@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../../routers/types-router.ts';
+import {RootStackParamList} from '../../routers/types-router.tsx';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {login} from '../../services/firebase/Auth.tsx';
 
@@ -10,8 +10,8 @@ interface LoginProps {
 }
 
 export default function Login({navigation}: LoginProps) {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [email, setEmail] = React.useState('joao@gmail.com');
+  const [password, setPassword] = React.useState('12345678');
   const [showPassword, setShowPassword] = React.useState(false);
   const [emailError, setEmailError] = React.useState('');
   const [passwordError, setPasswordError] = React.useState('');

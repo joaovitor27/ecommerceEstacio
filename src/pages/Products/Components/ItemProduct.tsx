@@ -1,27 +1,28 @@
 import React, {useEffect, useState} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../../../routers/types-router.ts';
+import {RootStackParamList} from '../../../routers/types-router.tsx';
 import {ProductData} from '../../../models/ProductData.tsx';
 import ProductService from '../../../services/product.tsx';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 interface ItemProductProps {
   navigation: StackNavigationProp<RootStackParamList>;
-  productData: ProductData;
+  productData: ProductData | null;
 }
 
 export default function ItemProduct({navigation, productData}: ItemProductProps) {
-  const [product, setProduct] = useState<ProductData>();
+  const [product, setProduct] = useState<ProductData | null>();
 
   useEffect(() => {
+    if (!productData) return;
     if (!productData.id) {
       setProduct(productData);
       return;
     }
     const productService = new ProductService()
     productService.findId(productData.id).then((result) => {
-      setProduct(result);
+      return setProduct(result);
     });
 
   }, []);
