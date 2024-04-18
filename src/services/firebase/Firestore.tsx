@@ -1,5 +1,6 @@
 import firestore, {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import {Item} from './models/item.tsx';
+import {QueryParams} from './models/query-params.tsx';
 
 export default class Firestore<T extends Item> {
   private readonly collectionRef: FirebaseFirestoreTypes.CollectionReference;
@@ -8,10 +9,10 @@ export default class Firestore<T extends Item> {
     this.collectionRef = firestore().collection(collectionPath);
   }
 
-  async findAll(filters?: FirebaseFirestoreTypes.QueryFilterConstraint | FirebaseFirestoreTypes.QueryCompositeFilterConstraint): Promise<T[]> {
+  async findAll(filters?: QueryParams): Promise<T[]> {
     let results;
     if (filters) {
-      results = await this.collectionRef.where(filters).get();
+      results = await this.collectionRef.where(filters.fieldPath, filters.opStr, filters.value).get();
     } else {
       results = await this.collectionRef.get();
     }
@@ -39,7 +40,7 @@ export default class Firestore<T extends Item> {
     return item;
   }
 
-  async add(item: T): Promise<void> {
+  async add(item: T) {
     await this.collectionRef.add(item);
   }
 

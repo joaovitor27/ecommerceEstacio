@@ -5,6 +5,9 @@ import {RootStackParamList} from '../../../routers/types-router.tsx';
 import {ProductData} from '../../../models/ProductData.tsx';
 import ProductService from '../../../services/product.tsx';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import CartService from '../../../services/cart.tsx';
+import {getCurrentUser} from '../../../services/firebase/Auth.tsx';
+import {firebase} from '@react-native-firebase/firestore';
 
 interface ItemProductProps {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -45,6 +48,17 @@ export default function ItemProduct({navigation, productData}: ItemProductProps)
     return product?.image ? {uri: product.image} : require('../../../assets/profile.png');
   }
 
+  async function addToCart(product: ProductData | null | undefined) {
+    if (!product) return;
+    if (!getCurrentUser()) return;
+    const serviceCart = new CartService();
+    await serviceCart.add({
+      user: getCurrentUser()?.uid,
+      product: firebase.firestore().doc('products/' + product.id),
+      quantity: 1,
+    });
+  }
+
   return (
     <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('Product', {productData: product})}>
       <View style={styles.imageContainer}>
@@ -59,7 +73,7 @@ export default function ItemProduct({navigation, productData}: ItemProductProps)
         </View>
       </View>
       <View style={styles.iconContainer}>
-        <TouchableOpacity style={styles.iconContainer}>
+        <TouchableOpacity style={styles.iconContainer} onPress={() => addToCart(product)}>
           <Icon name="shopping-cart" size={24} color={'#008080'}/>
         </TouchableOpacity>
       </View>
@@ -121,10 +135,6 @@ const styles = StyleSheet.create({
   value: {
     color: '#008080',
     fontSize: 18,
-  },
-  priceContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
   },
   iconContainer: {
     flexDirection: 'column',

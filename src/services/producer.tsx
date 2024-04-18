@@ -3,6 +3,7 @@ import {ProducerData} from '../models/ProducerData.tsx';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import ProductService from './product.tsx';
 import {randomNumberGenerator} from '../mocks/producer.tsx';
+import {QueryParams} from './firebase/models/query-params.tsx';
 
 export default class ProducerService extends Firestore<ProducerData> {
 
@@ -10,7 +11,7 @@ export default class ProducerService extends Firestore<ProducerData> {
     super('producer');
   }
 
-  async findAll(filters?:FirebaseFirestoreTypes.QueryFilterConstraint | FirebaseFirestoreTypes.QueryCompositeFilterConstraint): Promise<ProducerData[]> {
+  async findAll(filters?: QueryParams): Promise<ProducerData[]> {
     const results = await super.findAll(filters);
     const producers: ProducerData[] = [];
 

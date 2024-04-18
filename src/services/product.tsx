@@ -2,6 +2,7 @@ import Firestore from './firebase/Firestore.tsx';
 
 import {ProductData} from '../models/ProductData.tsx';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
+import {QueryParams} from './firebase/models/query-params.tsx';
 
 export default class ProductService extends Firestore<ProductData> {
 
@@ -9,7 +10,7 @@ export default class ProductService extends Firestore<ProductData> {
     super('products');
   }
 
-  async findAll(filters?: FirebaseFirestoreTypes.QueryFilterConstraint | FirebaseFirestoreTypes.QueryCompositeFilterConstraint){
+  async findAll(filters?: QueryParams) {
     const results = await super.findAll(filters);
     const products: ProductData[] = [];
     for (const productData of results) {
