@@ -2,7 +2,7 @@ import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../../routers/types-router';
+import {RootStackParamList} from '../../routers/types-router.tsx';
 import Stars from '../../Components/Stars.tsx';
 
 type ProductScreenRouteProp = RouteProp<RootStackParamList, 'Product'>;

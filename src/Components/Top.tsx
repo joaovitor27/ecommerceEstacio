@@ -7,7 +7,6 @@ interface TopProps {
 }
 
 export default function Top({title, subtitle}: TopProps) {
-
   return (
     <View style={styles.top}>
       <View style={styles.logoContainer}>
@@ -21,7 +20,6 @@ export default function Top({title, subtitle}: TopProps) {
       <Text style={styles.subtitle}>{subtitle}</Text>
     </View>
   );
-
 }
 
 const styles = StyleSheet.create({

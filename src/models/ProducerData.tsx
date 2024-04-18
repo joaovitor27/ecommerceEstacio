@@ -1,12 +1,12 @@
 import {ProductData} from './ProductData.tsx';
+import {Item} from '../services/firebase/models/item.tsx';
 
-export interface ProducerData {
-  id: number;
+export interface ProducerData extends Item {
   name: string;
   image: string;
   distance: number;
   stars: number;
   cnpj: string;
   description: string;
-  products: ProductData[];
+  products: (ProductData | null)[]
 }

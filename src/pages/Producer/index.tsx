@@ -2,7 +2,7 @@ import React from 'react';
 import {FlatList, Image, StyleSheet, Text, View} from 'react-native';
 import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../../routers/types-router';
+import {RootStackParamList} from '../../routers/types-router.tsx';
 import Stars from '../../Components/Stars.tsx';
 import ItemProduct from '../Products/Components/ItemProduct.tsx';
 
@@ -45,13 +45,6 @@ export default function Producer({route, navigation}: ProducerProps) {
         </View>
         <View>
           <Text style={styles.productsTitle}>Produtos:</Text>
-          <FlatList
-            data={producerData.products}
-            renderItem={({item}) => {
-              return <ItemProduct navigation={navigation} productData={item}/>
-            }}
-            keyExtractor={item => String(item.id)}
-          />
         </View>
       </View>
     );
@@ -61,8 +54,11 @@ export default function Producer({route, navigation}: ProducerProps) {
     <View style={styles.containerMain}>
       <FlatList
         ListHeaderComponent={topList}
-        data={null}
-        renderItem={null}
+        data={producerData.products}
+        renderItem={({item}) => {
+          return <ItemProduct navigation={navigation} productData={item}/>
+        }}
+        keyExtractor={item => String(item?.id)}
       />
     </View>
   );

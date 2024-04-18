@@ -1,46 +1,33 @@
 import Firestore from './firebase/Firestore.tsx';
 
-import {randomNumberGenerator} from '../mocks/producer.tsx';
 import {ProductData} from '../models/ProductData.tsx';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
+import {QueryParams} from './firebase/models/query-params.tsx';
 
-export default class ProductService extends Firestore {
+export default class ProductService extends Firestore<ProductData> {
 
   constructor() {
     super('products');
   }
 
-  async findAll(filters?: FirebaseFirestoreTypes.QueryFilterConstraint | FirebaseFirestoreTypes.QueryCompositeFilterConstraint): Promise<ProductData[]> {
-    return super.findAll(filters).then((result) => {
-      return result.map((product) => ({
-        id: product.id,
-        name: product.name,
-        image: product.image,
-        distance: randomNumberGenerator(1, 500),
-        stars: randomNumberGenerator(1, 5),
-        description: product.description,
-        price: product.price,
-        producer: product.producer,
-        quantity: product.quantity,
-        unidade_price: product.unidade_price,
-      }));
-    });
+  async findAll(filters?: QueryParams) {
+    const results = await super.findAll(filters);
+    const products: ProductData[] = [];
+    for (const productData of results) {
+      const producerRef = productData.producer as unknown as FirebaseFirestoreTypes.DocumentReference;
+      productData.producer = producerRef?.path;
+      products.push(productData);
+    }
+    return products;
   }
 
-  async findId(id: string): Promise<ProductData> {
-    return super.findId(id).then((product) => {
-      return ({
-        id: product?.id,
-        name: product?.name,
-        image: product?.image,
-        distance: randomNumberGenerator(1, 500),
-        stars: randomNumberGenerator(1, 5),
-        description: product?.description,
-        price: product?.price,
-        producer: product?.producer.path,
-        quantity: product?.quantity,
-        unidade_price: product?.unidade_price,
-      });
-    });
+  async findId(id: string) {
+    const result = await super.findId(id);
+    if (!result) {
+      return null;
+    }
+    const producerRef = result.producer as unknown as FirebaseFirestoreTypes.DocumentReference;
+    result.producer = producerRef?.path;
+    return result;
   }
 }

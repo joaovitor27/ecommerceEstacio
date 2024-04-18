@@ -1,5 +1,6 @@
-export interface ProductData {
-  id: string;
+import {Item} from '../services/firebase/models/item.tsx';
+
+export interface ProductData extends Item {
   name: string;
   image: string;
   distance: number;

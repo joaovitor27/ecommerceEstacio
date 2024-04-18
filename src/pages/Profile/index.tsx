@@ -1,6 +1,9 @@
 // Importação de bibliotecas e componentes do React e React Native
 import React from 'react';
 import { View, Image, FlatList, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../../routers/types-router.tsx';
+import {Text} from 'react-native';
 
 // Importação dos tipos para navegação entre telas com React Navigation
 import { StackNavigationProp } from '@react-navigation/stack';
