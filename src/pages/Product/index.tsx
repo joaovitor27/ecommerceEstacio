@@ -25,10 +25,10 @@ export default function Product({route, navigation}: ProductProps) {
       <View style={styles.detailsContainer}>
         <Image source={{uri: productData?.image}} style={styles.image}/>
         <Text style={styles.name}>{productData?.name}</Text>
-        <Text> {productData?.description} </Text>
-        <Text> Preço: {productData?.price} {getUnidatePrice()}</Text>
+        <Text style={styles.description}> {productData?.description} </Text>
+        <Text style={styles.price}> Preço: {productData?.price} {getUnidatePrice()}</Text>
         <Stars quantity={productData?.stars}/>
-        <Text>Distance: {productData?.distance} m</Text>
+        <Text style={styles.distance}>Distância: {productData?.distance} m</Text>
       </View>
     </View>
   );
@@ -55,5 +55,17 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: '#696969',
   },
+  description: {
+    fontSize: 16,
+    marginBottom: 10,
+    color: '#696969',
+  },
+  distance: {
+    color: '#696969',
+  },
+  price: {
+    color: '#696969',
+  }
 });

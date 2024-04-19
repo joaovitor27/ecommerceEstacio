@@ -10,8 +10,8 @@ interface LoginProps {
 }
 
 export default function Login({navigation}: LoginProps) {
-  const [email, setEmail] = React.useState('joao@gmail.com');
-  const [password, setPassword] = React.useState('12345678');
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
   const [showPassword, setShowPassword] = React.useState(false);
   const [emailError, setEmailError] = React.useState('');
   const [passwordError, setPasswordError] = React.useState('');
@@ -70,8 +70,10 @@ export default function Login({navigation}: LoginProps) {
     <View style={styles.container}>
       <Text style={styles.title}>Faça Login</Text>
       <TextInput
+        aria-label="Email"
         style={[styles.input, emailError ? styles.inputError : null]}
         placeholder="Email"
+        placeholderTextColor={'#727373'}
         onChangeText={handleEmailChange}
         value={email}
         keyboardType="email-address"
@@ -81,6 +83,7 @@ export default function Login({navigation}: LoginProps) {
         <TextInput
           style={[styles.passwordInput, passwordError ? styles.inputError : null]}
           placeholder="Senha"
+          placeholderTextColor={'#727373'}
           onChangeText={handlePasswordChange}
           value={password}
           secureTextEntry={!showPassword}
@@ -126,7 +129,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: '80%',
     height: 50,
-    color: '#696969',
+    color: '#000000',
   },
   passwordInput: {
     flex: 1,
@@ -135,7 +138,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     borderColor: '#727373',
-    color: '#696969',
+    color: '#000000',
   },
   button: {
     backgroundColor: '#008080',

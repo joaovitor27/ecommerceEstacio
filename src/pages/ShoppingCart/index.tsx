@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../routers/types-router.tsx';
 import {Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
@@ -18,7 +18,7 @@ export default function ShoppingCart({navigation}: ShoppingCartProps) {
   const [cartItems, setCartItems] = useState<ItemCart[]>([]);
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       const cartService = new CartService();
       cartService.findAll({
         fieldPath: 'user',
@@ -27,9 +27,6 @@ export default function ShoppingCart({navigation}: ShoppingCartProps) {
       }).then((result) => {
         setCartItems(result);
       });
-      return () => {
-        // Código para limpeza (se necessário)
-      };
     }, [])
   );
 
@@ -53,7 +50,7 @@ export default function ShoppingCart({navigation}: ShoppingCartProps) {
   };
 
   function getUnidatePrice(item: ItemCart | undefined) {
-    return item?.product?.unidade_price === 'KILO' ? 'por kg' : 'por unidade';
+    return item?.product?.unidade_price === 'KILO' ? 'por kg' : 'por Uni';
   }
 
   function getImage(item: ItemCart | undefined) {
@@ -93,7 +90,7 @@ export default function ShoppingCart({navigation}: ShoppingCartProps) {
 
   return (
     <>
-      <Top title={'Carrrinho'} subtitle={'Confira os produtos que você adicionou ao carrinho'}/>
+      <Top title={'Carrrinho'} subtitle={'Confira os produtos que você adicionou ao carrinho!'}/>
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollViewContent}>
           {(cartItems.length === 0) ? (
@@ -164,6 +161,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 5,
+    color: '#696969',
   },
   description: {
     color: '#a0a1a1',
@@ -275,6 +273,7 @@ const styles = StyleSheet.create({
   summaryText: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: '#696969',
   },
   checkoutButton: {
     backgroundColor: '#008080',

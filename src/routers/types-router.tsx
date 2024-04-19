@@ -1,5 +1,6 @@
 import {ProducerData} from '../models/ProducerData.tsx';
 import {ProductData} from '../models/ProductData.tsx';
+import {ItemCart} from '../models/ItemCart.tsx';
 
 export type RootStackParamList = {
   Home: undefined;

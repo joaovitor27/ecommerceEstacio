@@ -36,7 +36,7 @@ export default function ItemProduct({navigation, productData}: ItemProductProps)
   }
 
   function getUnidatePrice() {
-    return product?.unidade_price === 'KILO' ? 'por kg' : 'por unidade';
+    return product?.unidade_price === 'KILO' ? 'por kg' : 'por Uni';
   }
 
   function formatPrice(price?: number) {
@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 5,
+    color: '#696969',
   },
   description: {
     color: '#a0a1a1',
