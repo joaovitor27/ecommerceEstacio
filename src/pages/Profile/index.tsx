@@ -1,13 +1,8 @@
 // Importação de bibliotecas e componentes do React e React Native
 import React from 'react';
-import { View, Image, FlatList, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Alert, View, Image, FlatList, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../routers/types-router.tsx';
-import {Text} from 'react-native';
-
-// Importação dos tipos para navegação entre telas com React Navigation
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../routers/types-router';
 
 // Importação da imagem de perfil do usuário
 import profilePic from '../../assets/perfil.png';
@@ -15,6 +10,8 @@ import profilePic from '../../assets/perfil.png';
 // Importação de um componente customizado para exibição de ícones
 import Icon from './Icon';
 
+import Top from '../../Components/Top.tsx';
+import { launchImageLibrary } from 'react-native-image-picker';
 // No react, tudo o que você for usar numa página você tem que importar.
 // Não sei se é obrigatório, mas sempre vejo isso sendo feito primeiro no código,
 // antes de tudo.
@@ -35,11 +32,14 @@ interface Props {
 // Componente funcional sem estado para exibir o cabeçalho do perfil
 //*traduzindo* -> função para construir o header
 const ProfileHeader = () => (
-  <View style={{ alignItems: 'center', marginBottom: 20 }}>
-    <Image source={profilePic} style={{ width: 80, height: 80, borderRadius: 40, top: 10 }} />
-    <Text style={{ marginTop: 10, fontSize: 20, fontWeight: 'bold' }}>Nome do Usuário</Text>
-  </View>
+  <Top title={'Perfil'}>
+    <View style={{ alignItems: 'center', marginBottom: 20 }}>
+      <Image source={profilePic} style={{ width: 80, height: 80, borderRadius: 40, top: 10 }} />
+      <Text style={{ marginTop: 10, fontSize: 20, fontWeight: 'bold' }}>Nome do Usuário</Text>
+    </View>
+  </Top>
 );
+
 
 // Componente principal Profile, que recebe props incluindo funções de navegação
 //*traduzindo* -> função para construir o body
@@ -60,14 +60,14 @@ const Profile: React.FC<Props> = ({ navigation }) => {
       icon: 'map-marker-outline',
       title: 'Endereços',
       description: 'Gerencie seus endereços',
-      onPress: () => {},
+      onPress: () => {navigation.navigate('Address')},
     },
     {
       id: '3',
       icon: 'credit-card-outline',
       title: 'Formas de Pagamento',
       description: 'Suas opções de pagamento',
-      onPress: () => {},
+      onPress: () => {navigation.navigate('PaymentMethods')},
     },
     {
       id: '4',
