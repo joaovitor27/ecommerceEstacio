@@ -1,15 +1,15 @@
 import {ProductData} from './ProductData.tsx';
-import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 
 export interface ItemCart {
-  id: string;
+  id?: string;
   user: string;
-  product: ProductData | null;
+  product: ProductData;
   quantity: number;
 }
 
 export interface ItemCartBody {
-  user: string | undefined;
-  product: FirebaseFirestoreTypes.DocumentReference | undefined;
+  id?: string;
+  user: string;
+  product: string;
   quantity: number;
 }

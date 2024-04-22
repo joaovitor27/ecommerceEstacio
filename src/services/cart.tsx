@@ -1,6 +1,5 @@
 import Firestore from './firebase/Firestore.tsx';
 import {ItemCart, ItemCartBody} from '../models/ItemCart.tsx';
-import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import ProductService from './product.tsx';
 import {QueryParams} from './firebase/models/query-params.tsx';
 
@@ -11,13 +10,21 @@ export default class CartService extends Firestore<ItemCart> {
   }
 
   async findAll(filters?: QueryParams): Promise<ItemCart[]> {
-    const results = await super.findAll(filters);
+    const results = await super.findAll(filters) as ItemCartBody[];
     const items: ItemCart[] = [];
     for (const item of results) {
       const product = new ProductService()
-      const productPath = item.product as unknown as FirebaseFirestoreTypes.DocumentReference;
-      item.product = await product.findId(productPath.id)
-      items.push(item);
+      const resultProduct = await product.findId(item.product);
+      if (!resultProduct) {
+        continue;
+      }
+      const productMap: ItemCart = {
+        id: item.id,
+        user: item.user,
+        product: resultProduct,
+        quantity: item.quantity,
+      }
+      items.push(productMap);
     }
     return items;
   }
@@ -26,7 +33,7 @@ export default class CartService extends Firestore<ItemCart> {
     return await super.findId(id);
   }
 
-  async add(item: ItemCartBody) {
+  async addItemCard(item: ItemCartBody) {
     await super.add(item);
   }
 }

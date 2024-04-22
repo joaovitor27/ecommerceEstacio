@@ -3,7 +3,7 @@ import {StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native'
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../routers/types-router.tsx';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {login} from '../../services/firebase/Auth.tsx';
+import {getCurrentUser, login} from '../../services/firebase/Auth.tsx';
 
 interface LoginProps {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -15,6 +15,10 @@ export default function Login({navigation}: LoginProps) {
   const [showPassword, setShowPassword] = React.useState(false);
   const [emailError, setEmailError] = React.useState('');
   const [passwordError, setPasswordError] = React.useState('');
+
+  if (getCurrentUser()) {
+    navigation.navigate('Tab');
+  }
 
   const handleEmailChange = (text: string) => {
     setEmail(text);
@@ -89,11 +93,13 @@ export default function Login({navigation}: LoginProps) {
           secureTextEntry={!showPassword}
         />
         <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.eyeIcon}>
-          <Icon name={showPassword ? 'eye-slash' : 'eye'} size={20} style={[passwordError ? styles.iconError : styles.icon]}/>
+          <Icon name={showPassword ? 'eye-slash' : 'eye'} size={20}
+                style={[passwordError ? styles.iconError : styles.icon]}/>
         </TouchableOpacity>
       </View>
       {passwordError ? <Text style={[styles.errorMessage, styles.errorAlignment]}>{passwordError}</Text> : null}
-      <TouchableOpacity style={passwordError || emailError ? styles.buttonDisable : styles.button} onPress={handleLogin} disabled={!!(passwordError || emailError) }>
+      <TouchableOpacity style={passwordError || emailError ? styles.buttonDisable : styles.button} onPress={handleLogin}
+                        disabled={!!(passwordError || emailError)}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
     </View>
@@ -175,7 +181,7 @@ const styles = StyleSheet.create({
   icon: {
     color: '#008080',
   },
-    iconError: {
+  iconError: {
     color: 'red',
   },
   eyeIcon: {

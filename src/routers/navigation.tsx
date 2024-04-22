@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
@@ -103,14 +103,13 @@ function TabsRoutes() {
 export default function Navigation() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='InitialPage' screenOptions={{headerTitle: '', headerShown: false}}>
+      <Stack.Navigator initialRouteName='Tab' screenOptions={{headerTitle: '', headerShown: false}}>
         <Stack.Screen name='InitialPage' component={InitialPage}/>
         <Stack.Screen name='Login' component={Login}/>
         <Stack.Screen name='Register' component={Register}/>
         <Stack.Screen name='Tab' component={TabsRoutes}/>
         <Stack.Screen name='Producer' component={Producer as React.ComponentType}/>
         <Stack.Screen name='Product' component={Product as React.ComponentType}/>
-
       </Stack.Navigator>
     </NavigationContainer>
   );
