@@ -3,18 +3,22 @@ import {StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native'
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../routers/types-router.tsx';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {login} from '../../services/firebase/Auth.tsx';
+import {getCurrentUser, login} from '../../services/firebase/Auth.tsx';
 
 interface LoginProps {
   navigation: StackNavigationProp<RootStackParamList>;
 }
 
 export default function Login({navigation}: LoginProps) {
-  const [email, setEmail] = React.useState('joao@gmail.com');
-  const [password, setPassword] = React.useState('12345678');
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
   const [showPassword, setShowPassword] = React.useState(false);
   const [emailError, setEmailError] = React.useState('');
   const [passwordError, setPasswordError] = React.useState('');
+
+  if (getCurrentUser()) {
+    navigation.navigate('Tab');
+  }
 
   const handleEmailChange = (text: string) => {
     setEmail(text);
@@ -70,8 +74,10 @@ export default function Login({navigation}: LoginProps) {
     <View style={styles.container}>
       <Text style={styles.title}>Faça Login</Text>
       <TextInput
+        aria-label="Email"
         style={[styles.input, emailError ? styles.inputError : null]}
         placeholder="Email"
+        placeholderTextColor={'#727373'}
         onChangeText={handleEmailChange}
         value={email}
         keyboardType="email-address"
@@ -81,16 +87,19 @@ export default function Login({navigation}: LoginProps) {
         <TextInput
           style={[styles.passwordInput, passwordError ? styles.inputError : null]}
           placeholder="Senha"
+          placeholderTextColor={'#727373'}
           onChangeText={handlePasswordChange}
           value={password}
           secureTextEntry={!showPassword}
         />
         <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.eyeIcon}>
-          <Icon name={showPassword ? 'eye-slash' : 'eye'} size={20} style={[passwordError ? styles.iconError : styles.icon]}/>
+          <Icon name={showPassword ? 'eye-slash' : 'eye'} size={20}
+                style={[passwordError ? styles.iconError : styles.icon]}/>
         </TouchableOpacity>
       </View>
       {passwordError ? <Text style={[styles.errorMessage, styles.errorAlignment]}>{passwordError}</Text> : null}
-      <TouchableOpacity style={passwordError || emailError ? styles.buttonDisable : styles.button} onPress={handleLogin} disabled={!!(passwordError || emailError) }>
+      <TouchableOpacity style={passwordError || emailError ? styles.buttonDisable : styles.button} onPress={handleLogin}
+                        disabled={!!(passwordError || emailError)}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
     </View>
@@ -126,7 +135,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: '80%',
     height: 50,
-    color: '#696969',
+    color: '#000000',
   },
   passwordInput: {
     flex: 1,
@@ -135,7 +144,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     borderColor: '#727373',
-    color: '#696969',
+    color: '#000000',
   },
   button: {
     backgroundColor: '#008080',
@@ -172,7 +181,7 @@ const styles = StyleSheet.create({
   icon: {
     color: '#008080',
   },
-    iconError: {
+  iconError: {
     color: 'red',
   },
   eyeIcon: {

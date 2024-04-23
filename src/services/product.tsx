@@ -11,7 +11,7 @@ export default class ProductService extends Firestore<ProductData> {
   }
 
   async findAll(filters?: QueryParams) {
-    const results = await super.findAll(filters);
+    const results = await super.findAll(filters) as ProductData[];
     const products: ProductData[] = [];
     for (const productData of results) {
       const producerRef = productData.producer as unknown as FirebaseFirestoreTypes.DocumentReference;

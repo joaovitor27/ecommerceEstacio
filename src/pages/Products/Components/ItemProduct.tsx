@@ -7,7 +7,7 @@ import ProductService from '../../../services/product.tsx';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import CartService from '../../../services/cart.tsx';
 import {getCurrentUser} from '../../../services/firebase/Auth.tsx';
-import {firebase} from '@react-native-firebase/firestore';
+import {Message, messageType} from '../../../Components/Message.tsx';
 
 interface ItemProductProps {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -16,6 +16,9 @@ interface ItemProductProps {
 
 export default function ItemProduct({navigation, productData}: ItemProductProps) {
   const [product, setProduct] = useState<ProductData | null>();
+  const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState<messageType>('default');
+  const [showMessage, setShowMessage] = useState(false);
 
   useEffect(() => {
     if (!productData) return;
@@ -36,7 +39,7 @@ export default function ItemProduct({navigation, productData}: ItemProductProps)
   }
 
   function getUnidatePrice() {
-    return product?.unidade_price === 'KILO' ? 'por kg' : 'por unidade';
+    return product?.unidade_price === 'KILO' ? 'por kg' : 'por Uni';
   }
 
   function formatPrice(price?: number) {
@@ -52,32 +55,53 @@ export default function ItemProduct({navigation, productData}: ItemProductProps)
     if (!product) return;
     if (!getCurrentUser()) return;
     const serviceCart = new CartService();
-    await serviceCart.add({
-      user: getCurrentUser()?.uid,
-      product: firebase.firestore().doc('products/' + product.id),
-      quantity: 1,
+    serviceCart.findAll({
+      fieldPath: 'product',
+      opStr: '==',
+      value: product.id as string,
+    }).then(async (result) => {
+      const productResult = result.filter((item) => item.user === getCurrentUser()?.uid)[0];
+      if (productResult) {
+        await serviceCart.update(String(productResult.id), {quantity: productResult.quantity + 1});
+      } else {
+        await serviceCart.addItemCard({
+          user: getCurrentUser()?.uid as string,
+          product: product.id as string,
+          quantity: 1,
+        });
+      }
+      setMessage('Produto adicionado ao carrinho');
+      setMessageType('success');
+      setShowMessage(true);
     });
   }
 
+  const hideMessage = () => {
+    setShowMessage(false);
+  };
+
   return (
-    <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('Product', {productData: product})}>
-      <View style={styles.imageContainer}>
-        <Image source={getImage()} style={styles.image}/>
-      </View>
-      <View style={styles.infoContainer}>
-        <Text style={styles.name}>{product?.name}</Text>
-        <Text style={styles.description}>{getDescrition()}</Text>
-        <View style={styles.row}>
-          <Text style={styles.label}>R$</Text>
-          <Text style={styles.value}>{formatPrice(product?.price)} {getUnidatePrice()}</Text>
+    <>
+      {showMessage && <Message message={message} messageType={messageType} onHide={hideMessage}/>}
+      <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('Product', {productData: product})}>
+        <View style={styles.imageContainer}>
+          <Image source={getImage()} style={styles.image}/>
         </View>
-      </View>
-      <View style={styles.iconContainer}>
-        <TouchableOpacity style={styles.iconContainer} onPress={() => addToCart(product)}>
-          <Icon name="shopping-cart" size={24} color={'#008080'}/>
-        </TouchableOpacity>
-      </View>
-    </TouchableOpacity>
+        <View style={styles.infoContainer}>
+          <Text style={styles.name}>{product?.name}</Text>
+          <Text style={styles.description}>{getDescrition()}</Text>
+          <View style={styles.row}>
+            <Text style={styles.label}>R$</Text>
+            <Text style={styles.value}>{formatPrice(product?.price)} {getUnidatePrice()}</Text>
+          </View>
+        </View>
+        <View style={styles.iconContainer}>
+          <TouchableOpacity style={styles.iconContainer} onPress={() => addToCart(product)}>
+            <Icon name="shopping-cart" size={24} color={'#008080'}/>
+          </TouchableOpacity>
+        </View>
+      </TouchableOpacity>
+    </>
   );
 }
 
@@ -115,6 +139,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 5,
+    color: '#696969',
   },
   description: {
     color: '#a0a1a1',

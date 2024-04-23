@@ -32,8 +32,8 @@ export default function Producer({route, navigation}: ProducerProps) {
           <Image source={getImage()} style={styles.image}/>
           <View style={styles.detailsContainer}>
             <Text style={styles.name}>{producerData.name}</Text>
-            <Text>Distance: {producerData.distance} m</Text>
-            <Text>CNPJ: {formatCNPJ(producerData.cnpj)}</Text>
+            <Text style={styles.distanceAndCnpj}>Distance: {producerData.distance} m</Text>
+            <Text style={styles.distanceAndCnpj}>CNPJ: {formatCNPJ(producerData.cnpj)}</Text>
             <Stars
               quantity={producerData.stars}
             />
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     paddingTop: 40,
-    paddingBottom: 40,
+    paddingBottom: 10,
   },
   topContainer: {
     flexDirection: 'row',
@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: '#696969',
   },
   descriptionContainer: {
     backgroundColor: '#008080', // Cor de fundo destacada
@@ -105,6 +106,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
     color: '#fff',
+  },
+  distanceAndCnpj: {
+    color: '#696969',
   },
   description: {
     fontSize: 16,
@@ -119,6 +123,7 @@ const styles = StyleSheet.create({
   productsTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 5,
+    color: '#696969',
   },
 });

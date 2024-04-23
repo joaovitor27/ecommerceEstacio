@@ -2,6 +2,7 @@ import {ProducerData} from '../models/ProducerData.tsx';
 import {ProductData} from '../models/ProductData.tsx';
 
 export type RootStackParamList = {
+  InitialPage: undefined;
   Home: undefined;
   Profile: { userId: string };
   Login: undefined;

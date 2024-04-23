@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
@@ -106,7 +106,7 @@ function TabsRoutes() {
 export default function Navigation() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='InitialPage' screenOptions={{headerTitle: '', headerShown: false}}>
+      <Stack.Navigator initialRouteName='Tab' screenOptions={{headerTitle: '', headerShown: false}}>
         <Stack.Screen name='InitialPage' component={InitialPage}/>
         <Stack.Screen name='Login' component={Login}/>
         <Stack.Screen name='Register' component={Register}/>
@@ -116,7 +116,6 @@ export default function Navigation() {
         <Stack.Screen name='MyPurchases' component={MyPurchases}/>
         <Stack.Screen name='Address' component={Address}/>
         <Stack.Screen name="PaymentMethods" component={PaymentMethods} />
-
       </Stack.Navigator>
     </NavigationContainer>
   );
