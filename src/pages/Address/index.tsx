@@ -11,7 +11,7 @@ interface Address {
   zipCode: string;
 }
 
-const AddAddressScreen: React.FC = () => {
+const AddAddressScreen: React.FC = (navigation: Navigator) => {
   const [address, setAddress] = useState<Address>({
     street: '',
     number: '',
@@ -31,33 +31,25 @@ const AddAddressScreen: React.FC = () => {
     alert('Endereço salvo com sucesso!');
   };
 
+  // Função placeholder para obter localização
+  const handleGetLocation = () => {
+    console.log('Obtendo localização...');
+    alert('Funcionalidade de obter localização ainda não implementada.');
+    navigation.navigate('Product', {productData: product})
+  };
+
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Endereço</Text>
+      </View>
       <ScrollView contentContainerStyle={styles.scrollViewContainer}>
-        <Text style={styles.label}>Rua</Text>
+      <Text style={styles.label}>CEP</Text>
         <TextInput
           style={styles.input}
-          onChangeText={(value) => handleChange('street', value)}
-          value={address.street}
-        />
-        <Text style={styles.label}>Número</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={(value) => handleChange('number', value)}
-          value={address.number}
+          onChangeText={(value) => handleChange('zipCode', value)}
+          value={address.zipCode}
           keyboardType="numeric"
-        />
-        <Text style={styles.label}>Complemento</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={(value) => handleChange('complement', value)}
-          value={address.complement}
-        />
-        <Text style={styles.label}>Cidade</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={(value) => handleChange('city', value)}
-          value={address.city}
         />
         <Text style={styles.label}>Estado</Text>
         <TextInput
@@ -65,14 +57,45 @@ const AddAddressScreen: React.FC = () => {
           onChangeText={(value) => handleChange('state', value)}
           value={address.state}
         />
-        <Text style={styles.label}>CEP</Text>
+        <Text style={styles.label}>Cidade</Text>
         <TextInput
           style={styles.input}
-          onChangeText={(value) => handleChange('zipCode', value)}
-          value={address.zipCode}
-          keyboardType="numeric"
+          onChangeText={(value) => handleChange('city', value)}
+          value={address.city}
         />
-        <Button title="Salvar Endereço" onPress={handleSubmit} />
+
+        <View style={styles.row}>
+          <View style={[styles.flexLarge, styles.fieldContainer]}>
+            <Text style={styles.label}>Rua</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={(value) => handleChange('street', value)}
+              value={address.street}
+            />
+          </View>
+          <View style={[styles.flexSmall, styles.fieldContainer]}>
+            <Text style={styles.label}>Número</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={(value) => handleChange('number', value)}
+              value={address.number}
+              keyboardType="numeric"
+            />
+          </View>
+        </View>
+        <Text style={styles.label}>Complemento</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={(value) => handleChange('complement', value)}
+          value={address.complement}
+        />
+
+        <View style={styles.button}>
+          <Button title="Salvar Endereço" onPress={handleSubmit} />
+        </View>
+        <View style={styles.button}>
+          <Button title="Obter Localização Automaticamente" onPress={handleGetLocation} />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -91,6 +114,20 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     fontWeight: 'bold'
   },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  fieldContainer: {
+    flexDirection: 'column',
+  },
+  flexLarge: {
+    flex: 3, // Maior parte do espaço
+  },
+  flexSmall: {
+    flex: 1, // Menor parte do espaço
+  },
   input: {
     marginBottom: 15,
     paddingHorizontal: 10,
@@ -98,6 +135,40 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ddd',
     borderRadius: 4,
+  },
+  button: {
+    marginBottom: 10,
+  },
+  banner: {
+    backgroundColor: 'green',
+    paddingVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  bannerText: {
+    color: '#fff',
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+  header: {
+    backgroundColor: '#34A853', // Ajuste para a cor verde que você deseja
+    paddingVertical: 20,
+    paddingHorizontal: 15,
+    marginBottom: 20, // Espaço abaixo do cabeçalho
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    alignItems: 'center',
+    flexDirection: 'row', // Se você quiser adicionar ícones ou mais elementos ao cabeçalho
+  },
+  headerTitle: {
+    color: '#fff',
+    fontSize: 28,
+    fontWeight: 'bold',
+    flex: 1, // Isso garante que o título ocupe a maior parte do espaço se houver outros elementos
+    marginLeft: 15, // Se houver um ícone antes do título, por exemplo
   }
 });
 
