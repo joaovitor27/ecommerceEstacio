@@ -17,6 +17,7 @@ import ShoppingCart from '../pages/ShoppingCart';
 import Address from '../pages/Address';
 import PaymentMethods from '../pages/PaymentMethods';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import Help from '../pages/Help';
 
 const Stack = createStackNavigator();
 
@@ -106,7 +107,7 @@ function TabsRoutes() {
 export default function Navigation() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Tab' screenOptions={{headerTitle: '', headerShown: false}}>
+      <Stack.Navigator initialRouteName='InitialPage' screenOptions={{headerTitle: '', headerShown: false}}>
         <Stack.Screen name='InitialPage' component={InitialPage}/>
         <Stack.Screen name='Login' component={Login}/>
         <Stack.Screen name='Register' component={Register}/>
@@ -115,7 +116,8 @@ export default function Navigation() {
         <Stack.Screen name='Product' component={Product as React.ComponentType}/>
         <Stack.Screen name='MyPurchases' component={MyPurchases}/>
         <Stack.Screen name='Address' component={Address}/>
-        <Stack.Screen name="PaymentMethods" component={PaymentMethods} />
+        <Stack.Screen name="PaymentMethods" component={PaymentMethods}/>
+        <Stack.Screen name='Help' component={Help}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

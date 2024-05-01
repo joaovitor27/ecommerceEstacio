@@ -11,7 +11,7 @@ import profilePic from '../../assets/perfil.png';
 import Icon from './Icon';
 
 import Top from '../../Components/Top.tsx';
-import { launchImageLibrary } from 'react-native-image-picker';
+import { logout } from '../../services/firebase/Auth.tsx';
 // No react, tudo o que você for usar numa página você tem que importar.
 // Não sei se é obrigatório, mas sempre vejo isso sendo feito primeiro no código,
 // antes de tudo.
@@ -74,14 +74,16 @@ const Profile: React.FC<Props> = ({ navigation }) => {
       icon: 'help-circle-outline',
       title: 'Ajuda',
       description: 'Central de suporte',
-      onPress: () => {},
+      onPress: () => {navigation.navigate('Help')},
     },
     {
       id: '5',
       icon: 'exit-to-app',
       title: 'Sair',
       description: 'Desconectar da conta',
-      onPress: () => {},
+      onPress: () => {logout().then(_r =>
+       navigation.navigate('InitialPage')
+      )},
     },
   ];
 

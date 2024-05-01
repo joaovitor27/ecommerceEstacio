@@ -11,7 +11,7 @@ interface Address {
   zipCode: string;
 }
 
-const AddAddressScreen: React.FC = (navigation: Navigator) => {
+const AddAddressScreen: React.FC = ({navigation}: any) => {
   const [address, setAddress] = useState<Address>({
     street: '',
     number: '',
@@ -34,8 +34,7 @@ const AddAddressScreen: React.FC = (navigation: Navigator) => {
   // Função placeholder para obter localização
   const handleGetLocation = () => {
     console.log('Obtendo localização...');
-    alert('Funcionalidade de obter localização ainda não implementada.');
-    navigation.navigate('Product', {productData: product})
+    navigation.navigate('Help');
   };
 
   return (
@@ -140,7 +139,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   banner: {
-    backgroundColor: 'green',
+    backgroundColor: '#008080',
     paddingVertical: 10,
     alignItems: 'center',
     justifyContent: 'center',
@@ -151,8 +150,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   header: {
-    backgroundColor: '#34A853', // Ajuste para a cor verde que você deseja
-    paddingVertical: 20,
+    backgroundColor: '#008080', // Ajuste para a cor verde que você deseja
+    paddingVertical: 50,
     paddingHorizontal: 15,
     marginBottom: 20, // Espaço abaixo do cabeçalho
     elevation: 4,
