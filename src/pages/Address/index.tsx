@@ -23,6 +23,10 @@ const AddAddressScreen: React.FC = ({navigation}: any) => {
   });
 
   const handleChange = (name: keyof Address, value: string) => {
+    if (value === "Clique aqui para selecionar") {
+      // Não atualize o estado se o valor for a mensagem de placeholder
+      return;
+    }
     setAddress(prev => ({ ...prev, [name]: value }));
   };
 
@@ -37,12 +41,67 @@ const AddAddressScreen: React.FC = ({navigation}: any) => {
     console.log('Obtendo localização...');
     navigation.navigate('Help');
   };
+  const statesWithPlaceholder = [
+    "Clique aqui para selecionar",
+    "Acre - AC",
+    "Alagoas - AL",
+    "Amapá - AP",
+    "Amazonas - AM",
+    "Bahia - BA",
+    "Ceará - CE",
+    "Distrito Federal - DF",
+    "Espírito Santo - ES",
+    "Goiás - GO",
+    "Maranhão - MA",
+    "Mato Grosso - MT",
+    "Mato Grosso do Sul - MS",
+    "Minas Gerais - MG",
+    "Pará - PA",
+    "Paraíba - PB",
+    "Paraná - PR",
+    "Pernambuco - PE",
+    "Piauí - PI",
+    "Rio de Janeiro - RJ",
+    "Rio Grande do Norte - RN",
+    "Rio Grande do Sul - RS",
+    "Rondônia - RO",
+    "Roraima - RR",
+    "Santa Catarina - SC",
+    "São Paulo - SP",
+    "Sergipe - SE",
+    "Tocantins - TO"
+  ];
+  
 
   const states = [
-    "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA",
-    "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"
-  ]; // Lista de estados
-
+    "Acre - AC",
+    "Alagoas - AL",
+    "Amapá - AP",
+    "Amazonas - AM",
+    "Bahia - BA",
+    "Ceará - CE",
+    "Distrito Federal - DF",
+    "Espírito Santo - ES",
+    "Goiás - GO",
+    "Maranhão - MA",
+    "Mato Grosso - MT",
+    "Mato Grosso do Sul - MS",
+    "Minas Gerais - MG",
+    "Pará - PA",
+    "Paraíba - PB",
+    "Paraná - PR",
+    "Pernambuco - PE",
+    "Piauí - PI",
+    "Rio de Janeiro - RJ",
+    "Rio Grande do Norte - RN",
+    "Rio Grande do Sul - RS",
+    "Rondônia - RO",
+    "Roraima - RR",
+    "Santa Catarina - SC",
+    "São Paulo - SP",
+    "Sergipe - SE",
+    "Tocantins - TO"
+];
   
 
   return (
@@ -51,13 +110,7 @@ const AddAddressScreen: React.FC = ({navigation}: any) => {
         <Text style={styles.headerTitle}>Endereço</Text>
       </View>
       <ScrollView contentContainerStyle={styles.scrollViewContainer}>
-      <Text style={styles.label}>CEP</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={(value) => handleChange('zipCode', value)}
-          value={address.zipCode}
-          keyboardType="numeric"
-        />
+     
         
         <Text style={styles.label}>CEP</Text>
         <TextInput
@@ -71,11 +124,12 @@ const AddAddressScreen: React.FC = ({navigation}: any) => {
           selectedValue={address.state}
           style={styles.input}
           onValueChange={(itemValue, itemIndex) => handleChange('state', itemValue)}
-        >
-          {states.map((state, index) => (
-            <Picker.Item key={index} label={state} value={state} />
-          ))}
+          >
+        {statesWithPlaceholder.map((state, index) => (
+        <Picker.Item key={index} label={state} value={state} />
+        ))}
         </Picker>
+
         <Text style={styles.label}>Cidade</Text>
         <TextInput
           style={styles.input}
