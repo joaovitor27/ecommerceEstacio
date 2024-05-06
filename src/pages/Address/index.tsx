@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Picker } from '@react-native-picker/picker';
 
 interface Address {
   street: string;
@@ -37,6 +38,13 @@ const AddAddressScreen: React.FC = ({navigation}: any) => {
     navigation.navigate('Help');
   };
 
+  const states = [
+    "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA",
+    "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"
+  ]; // Lista de estados
+
+  
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -50,12 +58,24 @@ const AddAddressScreen: React.FC = ({navigation}: any) => {
           value={address.zipCode}
           keyboardType="numeric"
         />
-        <Text style={styles.label}>Estado</Text>
+        
+        <Text style={styles.label}>CEP</Text>
         <TextInput
           style={styles.input}
-          onChangeText={(value) => handleChange('state', value)}
-          value={address.state}
+          onChangeText={(value) => handleChange('zipCode', value)}
+          value={address.zipCode}
+          keyboardType="numeric"
         />
+        <Text style={styles.label}>Estado</Text>
+        <Picker
+          selectedValue={address.state}
+          style={styles.input}
+          onValueChange={(itemValue, itemIndex) => handleChange('state', itemValue)}
+        >
+          {states.map((state, index) => (
+            <Picker.Item key={index} label={state} value={state} />
+          ))}
+        </Picker>
         <Text style={styles.label}>Cidade</Text>
         <TextInput
           style={styles.input}
