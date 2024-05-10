@@ -3,7 +3,6 @@ import { Image, ScrollView, StyleSheet, Text, View, TouchableOpacity, Dimensions
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../routers/types-router';
-import Stars from '../../Components/Stars';
 
 type HelpScreenRouteProp = RouteProp<RootStackParamList, 'Help'>;
 type HelpScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Help'>;
@@ -22,9 +21,10 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer }) => {
   const [expanded, setExpanded] = useState<boolean>(false);
 
   return (
-    <View>
-      <TouchableOpacity onPress={() => setExpanded(!expanded)}>
+    <View style={styles.faqItem}>
+      <TouchableOpacity onPress={() => setExpanded(!expanded)} style={styles.questionContainer}>
         <Text style={styles.question}>{question}</Text>
+        <Text style={styles.symbol}>{expanded ? '-' : '+'}</Text>
       </TouchableOpacity>
       {expanded && <Text style={styles.answer}>{answer}</Text>}
     </View>
@@ -33,48 +33,46 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer }) => {
 
 const Help: React.FC<HelpProps> = ({ route, navigation }) => {
   const faqs: FAQItemProps[] = [
-    
-      {
-        "question": "Como entro em contato com alguém de sua equipe?",
-        "answer": "Você pode ligar para o número de telefone (86)12345-6789"
-      },
-      {
-        "question": "Quais são os métodos de pagamento aceitos?",
-        "answer": "Aceitamos cartões de crédito, débito, e pagamentos via PayPal."
-      },
-      {
-        "question": "Como posso rastrear meu pedido?",
-        "answer": "Você pode rastrear seu pedido acessando a seção 'Meus Pedidos' no aplicativo e clicando no número de rastreamento."
-      },
-      {
-        "question": "Qual é a política de devolução?",
-        "answer": "Aceitamos devoluções dentro de 30 dias após a entrega. O item deve estar em sua embalagem original e em perfeito estado."
-      },
-      {
-        "question": "Posso alterar meu pedido após a confirmação?",
-        "answer": "Após a confirmação, não é possível alterar o pedido. Você pode cancelar e fazer um novo pedido, se necessário."
-      },
-      {
-        "question": "Como posso cancelar meu pedido?",
-        "answer": "Para cancelar seu pedido, acesse a seção 'Meus Pedidos', selecione o pedido que deseja cancelar e clique em 'Cancelar Pedido'."
-      },
-      {
-        "question": "Quanto tempo leva para meu pedido ser entregue?",
-        "answer": "O prazo de entrega varia de acordo com a sua localização e o método de envio escolhido, geralmente entre 5 a 10 dias úteis."
-      },
-      {
-        "question": "Vocês oferecem frete grátis?",
-        "answer": "Oferecemos frete grátis para pedidos acima de R$150,00."
-      },
-      {
-        "question": "Como posso aplicar um código de desconto?",
-        "answer": "Você pode aplicar um código de desconto na página de checkout, no campo 'Código de Desconto'."
-      },
-      {
-        "question": "O que faço se meu pedido chegar danificado?",
-        "answer": "Se seu pedido chegar danificado, entre em contato com nosso suporte ao cliente pelo telefone (86)12345-6789 ou pelo e-mail suporte@seuapp.com."
-      },
-    
+    {
+      question: "Como entro em contato com alguém de sua equipe?",
+      answer: "Você pode ligar para o número de telefone (86)12345-6789"
+    },
+    {
+      question: "Quais são os métodos de pagamento aceitos?",
+      answer: "Aceitamos cartões de crédito, débito, e pagamentos via PayPal."
+    },
+    {
+      question: "Como posso rastrear meu pedido?",
+      answer: "Você pode rastrear seu pedido acessando a seção 'Meus Pedidos' no aplicativo e clicando no número de rastreamento."
+    },
+    {
+      question: "Qual é a política de devolução?",
+      answer: "Aceitamos devoluções dentro de 30 dias após a entrega. O item deve estar em sua embalagem original e em perfeito estado."
+    },
+    {
+      question: "Posso alterar meu pedido após a confirmação?",
+      answer: "Após a confirmação, não é possível alterar o pedido. Você pode cancelar e fazer um novo pedido, se necessário."
+    },
+    {
+      question: "Como posso cancelar meu pedido?",
+      answer: "Para cancelar seu pedido, acesse a seção 'Meus Pedidos', selecione o pedido que deseja cancelar e clique em 'Cancelar Pedido'."
+    },
+    {
+      question: "Quanto tempo leva para meu pedido ser entregue?",
+      answer: "O prazo de entrega varia de acordo com a sua localização e o método de envio escolhido, geralmente entre 5 a 10 dias úteis."
+    },
+    {
+      question: "Vocês oferecem frete grátis?",
+      answer: "Oferecemos frete grátis para pedidos acima de R$150,00."
+    },
+    {
+      question: "Como posso aplicar um código de desconto?",
+      answer: "Você pode aplicar um código de desconto na página de checkout, no campo 'Código de Desconto'."
+    },
+    {
+      question: "O que faço se meu pedido chegar danificado?",
+      answer: "Se seu pedido chegar danificado, entre em contato com nosso suporte ao cliente pelo telefone (86)12345-6789 ou pelo e-mail suporte@seuapp.com."
+    },
     { question: "Você me amaria se eu fosse uma minhoca?", answer: "Claro amor ;)" },
     { question: "Você sangra?", answer: "Só quando menstruo kkkkkk" },
   ];
@@ -84,8 +82,7 @@ const Help: React.FC<HelpProps> = ({ route, navigation }) => {
       <View style={styles.banner}>
         <Image source={require('../../assets/tomateAjuda.png')} style={styles.bannerImage} />
       </View>
-      <Text style={styles.title}>Precisa de ajuda</Text>
-      
+      <Text style={styles.title}>Precisa de ajuda?</Text>
       <View style={styles.faqContainer}>
         {faqs.map((faq, index) => (
           <FAQItem key={index} question={faq.question} answer={faq.answer} />
@@ -104,7 +101,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   banner: {
-    width: width, // Use a largura da tela
+    width: width,
     height: 150,
     backgroundColor: '#008080',
     justifyContent: 'center',
@@ -113,35 +110,43 @@ const styles = StyleSheet.create({
   bannerImage: {
     width: 100,
     height: 100,
-    borderRadius: 50, // Metade do width ou height para tornar a imagem redonda
+    borderRadius: 50,
     resizeMode: 'contain',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  content: {
-    fontSize: 16,
-    textAlign: 'center',
-    marginBottom: 20,
+    marginVertical: 20,
   },
   faqContainer: {
     width: '100%',
   },
+  faqItem: {
+    marginBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    paddingVertical: 10,
+  },
+  questionContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+    padding: 10,
+    borderRadius: 5,
+  },
   question: {
     fontSize: 16,
     fontWeight: 'bold',
-    marginTop: 10,
+  },
+  symbol: {
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   answer: {
     fontSize: 14,
     paddingVertical: 5,
-  },
-  image: {
-    width: 300,
-    height: 300,
-    resizeMode: 'contain',
+    paddingHorizontal: 10,
   },
 });
 
