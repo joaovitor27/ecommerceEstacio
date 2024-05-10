@@ -12,4 +12,9 @@ export type RootStackParamList = {
   Tab: undefined;
   Products: undefined;
   Product: { productData: ProductData | null | undefined };
+  Help: undefined;
+  MyPurchases: undefined;
+  Address: undefined;
+  PaymentMethods: undefined;
+  Payment: undefined;
 };

@@ -1234,6 +1234,13 @@
   resolved "https://registry.npmjs.org/@eslint/js/-/js-8.57.0.tgz"
   integrity sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==
 
+"@expo/vector-icons@^14.0.1":
+  version "14.0.1"
+  resolved "https://registry.npmjs.org/@expo/vector-icons/-/vector-icons-14.0.1.tgz"
+  integrity sha512-7oIe1RRWmRQXNxmewsuAaIRNAQfkig7EFTuI5T8PCI7T4q/rS5iXWvlzAEXndkzSOSs7BAANrLyj7AtpEhTksg==
+  dependencies:
+    prop-types "^15.8.1"
+
 "@hapi/hoek@^9.0.0", "@hapi/hoek@^9.3.0":
   version "9.3.0"
   resolved "https://registry.npmjs.org/@hapi/hoek/-/hoek-9.3.0.tgz"
@@ -1741,6 +1748,11 @@
   version "19.2.2"
   resolved "https://registry.npmjs.org/@react-native-firebase/firestore/-/firestore-19.2.2.tgz"
   integrity sha512-SaW/f8vDwvP24KdCBo7uaBmE+5Y8JMKfWpOzJtY1XXuA7wlua3IjIilEXNVGrFk8az6N3n9RhCIpWbn4mOml9g==
+
+"@react-native-picker/picker@^2.7.5":
+  version "2.7.5"
+  resolved "https://registry.npmjs.org/@react-native-picker/picker/-/picker-2.7.5.tgz"
+  integrity sha512-vhMaOLkXSUb+YKVbukMJToU4g+89VMhBG2U9+cLYF8X8HtFRidrHjohGqT8/OyesDuKIXeLIP+UFYI9Q9CRA9Q==
 
 "@react-native/assets-registry@0.73.1":
   version "0.73.1"
