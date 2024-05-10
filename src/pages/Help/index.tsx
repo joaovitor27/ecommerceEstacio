@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Image, ScrollView, StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../routers/types-router';
+import { RootStackParamList } from '../../routers/types-router.tsx';
+import Stars from '../../Components/Stars.tsx';
 
 type HelpScreenRouteProp = RouteProp<RootStackParamList, 'Help'>;
 type HelpScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Help'>;
