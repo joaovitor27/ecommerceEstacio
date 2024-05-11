@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Dimensions, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 
 export type messageType = 'error' | 'success' | 'info' | 'warning' | 'default';
 
@@ -16,7 +16,7 @@ export function Message({message, messageType, onHide}: MessageProps) {
     const timer = setTimeout(() => {
       setVisible(false);
       onHide();
-    }, 3000); // Define a duração da mensagem em milissegundos (3 segundos neste exemplo)
+    }, 500); // Define a duração da mensagem em milissegundos (3 segundos neste exemplo)
 
     return () => clearTimeout(timer);
   }, []);
@@ -26,13 +26,11 @@ export function Message({message, messageType, onHide}: MessageProps) {
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: messageType === 'error' ? 'red' : 'green' }]}>
+    <View style={[styles.container, { backgroundColor: messageType === 'error' ? '#' : '#008080' }]}>
       <Text style={styles.text}>{message}</Text>
     </View>
   );
 }
-
-const screenHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   container: {
@@ -40,7 +38,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    padding: 10,
+    padding: 45,
     borderRadius: 0,
     justifyContent: 'center',
     alignItems: 'center',

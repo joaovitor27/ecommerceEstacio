@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Picker } from '@react-native-picker/picker';
+import React, {useState} from 'react';
+import {ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {Picker} from '@react-native-picker/picker';
+import Top from '../../Components/Top.tsx';
 
 interface Address {
   street: string;
@@ -23,11 +24,11 @@ const AddAddressScreen: React.FC = ({navigation}: any) => {
   });
 
   const handleChange = (name: keyof Address, value: string) => {
-    if (value === "Clique aqui para selecionar") {
+    if (value === 'Clique aqui para selecionar') {
       // Não atualize o estado se o valor for a mensagem de placeholder
       return;
     }
-    setAddress(prev => ({ ...prev, [name]: value }));
+    setAddress(prev => ({...prev, [name]: value}));
   };
 
   const handleSubmit = () => {
@@ -42,76 +43,40 @@ const AddAddressScreen: React.FC = ({navigation}: any) => {
     navigation.navigate('Help');
   };
   const statesWithPlaceholder = [
-    "Clique aqui para selecionar",
-    "Acre - AC",
-    "Alagoas - AL",
-    "Amapá - AP",
-    "Amazonas - AM",
-    "Bahia - BA",
-    "Ceará - CE",
-    "Distrito Federal - DF",
-    "Espírito Santo - ES",
-    "Goiás - GO",
-    "Maranhão - MA",
-    "Mato Grosso - MT",
-    "Mato Grosso do Sul - MS",
-    "Minas Gerais - MG",
-    "Pará - PA",
-    "Paraíba - PB",
-    "Paraná - PR",
-    "Pernambuco - PE",
-    "Piauí - PI",
-    "Rio de Janeiro - RJ",
-    "Rio Grande do Norte - RN",
-    "Rio Grande do Sul - RS",
-    "Rondônia - RO",
-    "Roraima - RR",
-    "Santa Catarina - SC",
-    "São Paulo - SP",
-    "Sergipe - SE",
-    "Tocantins - TO"
+    'Clique aqui para selecionar',
+    'Acre - AC',
+    'Alagoas - AL',
+    'Amapá - AP',
+    'Amazonas - AM',
+    'Bahia - BA',
+    'Ceará - CE',
+    'Distrito Federal - DF',
+    'Espírito Santo - ES',
+    'Goiás - GO',
+    'Maranhão - MA',
+    'Mato Grosso - MT',
+    'Mato Grosso do Sul - MS',
+    'Minas Gerais - MG',
+    'Pará - PA',
+    'Paraíba - PB',
+    'Paraná - PR',
+    'Pernambuco - PE',
+    'Piauí - PI',
+    'Rio de Janeiro - RJ',
+    'Rio Grande do Norte - RN',
+    'Rio Grande do Sul - RS',
+    'Rondônia - RO',
+    'Roraima - RR',
+    'Santa Catarina - SC',
+    'São Paulo - SP',
+    'Sergipe - SE',
+    'Tocantins - TO'
   ];
-  
-
-  const states = [
-    "Acre - AC",
-    "Alagoas - AL",
-    "Amapá - AP",
-    "Amazonas - AM",
-    "Bahia - BA",
-    "Ceará - CE",
-    "Distrito Federal - DF",
-    "Espírito Santo - ES",
-    "Goiás - GO",
-    "Maranhão - MA",
-    "Mato Grosso - MT",
-    "Mato Grosso do Sul - MS",
-    "Minas Gerais - MG",
-    "Pará - PA",
-    "Paraíba - PB",
-    "Paraná - PR",
-    "Pernambuco - PE",
-    "Piauí - PI",
-    "Rio de Janeiro - RJ",
-    "Rio Grande do Norte - RN",
-    "Rio Grande do Sul - RS",
-    "Rondônia - RO",
-    "Roraima - RR",
-    "Santa Catarina - SC",
-    "São Paulo - SP",
-    "Sergipe - SE",
-    "Tocantins - TO"
-];
-  
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Endereço</Text>
-      </View>
+      <Top title={'Endereço'} subtitle={'Adicione/Modifique seu endereço de entrega!'}/>
       <ScrollView contentContainerStyle={styles.scrollViewContainer}>
-     
-        
         <Text style={styles.label}>CEP</Text>
         <TextInput
           style={styles.input}
@@ -124,10 +89,10 @@ const AddAddressScreen: React.FC = ({navigation}: any) => {
           selectedValue={address.state}
           style={styles.input}
           onValueChange={(itemValue, itemIndex) => handleChange('state', itemValue)}
-          >
-        {statesWithPlaceholder.map((state, index) => (
-        <Picker.Item key={index} label={state} value={state} />
-        ))}
+        >
+          {statesWithPlaceholder.map((state, index) => (
+            <Picker.Item key={index} label={state} value={state}/>
+          ))}
         </Picker>
 
         <Text style={styles.label}>Cidade</Text>
@@ -162,13 +127,12 @@ const AddAddressScreen: React.FC = ({navigation}: any) => {
           onChangeText={(value) => handleChange('complement', value)}
           value={address.complement}
         />
-
-        <View style={styles.button}>
-          <Button title="Salvar Endereço" onPress={handleSubmit} />
-        </View>
-        <View style={styles.button}>
-          <Button title="Obter Localização Automaticamente" onPress={handleGetLocation} />
-        </View>
+        <TouchableOpacity style={styles.buttonSave} onPress={handleSubmit}>
+          <Text style={styles.textColorButton}>Salvar Endereço</Text>
+        </TouchableOpacity>
+        {/*<View style={styles.button}>*/}
+        {/*  <Button title="Obter Localização Automaticamente" onPress={handleGetLocation} color={'#008080'}/>*/}
+        {/*</View>*/}
       </ScrollView>
     </SafeAreaView>
   );
@@ -181,6 +145,18 @@ const styles = StyleSheet.create({
   },
   scrollViewContainer: {
     padding: 20,
+  },
+  buttonSave: {
+    backgroundColor: '#008080',
+    color: '#fff',
+    padding: 10,
+    alignItems: 'center',
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+  textColorButton: {
+    color: '#fff',
+    fontSize: 16,
   },
   label: {
     fontSize: 16,
@@ -230,7 +206,7 @@ const styles = StyleSheet.create({
     marginBottom: 20, // Espaço abaixo do cabeçalho
     elevation: 4,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.23,
     shadowRadius: 2.62,
     alignItems: 'center',

@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet, Button, Modal, TextInput, Alert } from 'react-native';
+import React, {useState} from 'react';
+import {Alert, FlatList, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import Top from '../../Components/Top.tsx';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const PaymentMethods = () => {
   const [paymentOptions, setPaymentOptions] = useState([
-    { id: '1', type: 'Visa **** **** **** 1234', details: 'Cartão de Crédito' },
-    { id: '2', type: 'Mastercard **** **** **** 5678', details: 'Cartão de Crédito' },
-    { id: '3', type: 'Elo **** **** **** 9012', details: 'Cartão de Crédito' },
+    {id: '1', type: 'Visa **** **** **** 1234', details: 'Cartão de Crédito'},
+    {id: '2', type: 'Mastercard **** **** **** 5678', details: 'Cartão de Crédito'},
+    {id: '3', type: 'Elo **** **** **** 9012', details: 'Cartão de Crédito'},
   ]);
 
   const [modalVisible, setModalVisible] = useState(false);
   const [newCardType, setNewCardType] = useState('');
   const [newCardDetails, setNewCardDetails] = useState('');
 
-  const renderOption = ({ item }) => (
+  const renderOption = ({item}) => (
     <TouchableOpacity style={styles.option}>
       <View style={styles.info}>
         <Text style={styles.type}>{item.type}</Text>
@@ -23,7 +25,7 @@ const PaymentMethods = () => {
 
   const handleAddCard = () => {
     if (!newCardType.trim() || !newCardDetails.trim()) {
-      Alert.alert("Erro", "Preencha todos os campos para adicionar o cartão.");
+      Alert.alert('Erro', 'Preencha todos os campos para adicionar o cartão.');
       return;
     }
 
@@ -40,45 +42,95 @@ const PaymentMethods = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={paymentOptions}
-        renderItem={renderOption}
-        keyExtractor={(item) => item.id}
-      />
-      <Button title="Adicionar Novo Cartão" onPress={() => setModalVisible(true)} />
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <TextInput
-              placeholder="Tipo de Cartão"
-              style={styles.input}
-              value={newCardType}
-              onChangeText={setNewCardType}
-            />
-            <TextInput
-              placeholder="Detalhes do Cartão"
-              style={styles.input}
-              value={newCardDetails}
-              onChangeText={setNewCardDetails}
-            />
-            <Button title="Salvar Cartão" onPress={handleAddCard} />
-          </View>
+    <>
+      <Top title={'Formas de pagamentos'} subtitle={'Adicione ou remova cartões de crédito para suas compras.'}/>
+      <View style={styles.container}>
+        <FlatList
+          data={paymentOptions}
+          renderItem={renderOption}
+          keyExtractor={(item) => item.id}
+        />
+        <View style={styles.padding}>
+          <TouchableOpacity style={styles.addCard} onPress={() => setModalVisible(true)}>
+            <Text style={styles.saveCard}>Adicionar Novo Cartão</Text>
+          </TouchableOpacity>
         </View>
-      </Modal>
-    </View>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+          }}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <TextInput
+                placeholder="Tipo de Cartão"
+                style={styles.input}
+                value={newCardType}
+                onChangeText={setNewCardType}
+              />
+              <TextInput
+                placeholder="Detalhes do Cartão"
+                style={styles.input}
+                value={newCardDetails}
+                onChangeText={setNewCardDetails}
+              />
+              <View style={styles.alinghItems}>
+                <View>
+                  <TouchableOpacity style={styles.checkoutButton} onPress={handleAddCard}>
+                    <Icon name={'save'} size={20} color={'#fff'}/>
+                  </TouchableOpacity>
+                </View>
+                <TouchableOpacity style={styles.closeModal} onPress={() => setModalVisible(false)}>
+                  <Icon name={'close'} size={20} color={'#fff'}/>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
+      </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  alinghItems: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '30%',
+  },
+  padding: {
+    padding: 20,
+  },
+  addCard: {
+    backgroundColor: '#008080',
+    padding: 10,
+    alignItems: 'center',
+    borderRadius: 5,
+    marginBottom: 20,
+  },
+
+  checkoutButton: {
+    backgroundColor: '#008080',
+    padding: 10,
+    alignItems: 'center',
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+  closeModal: {
+    backgroundColor: '#d02d2d',
+    padding: 10,
+    alignItems: 'center',
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+  saveCard: {
+    color: '#fff',
+    fontWeight: 'bold',
   },
   option: {
     flexDirection: 'row',
@@ -100,17 +152,17 @@ const styles = StyleSheet.create({
   },
   centeredView: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 22
   },
   modalView: {
     margin: 20,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     borderRadius: 20,
     padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
+    alignItems: 'center',
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2
@@ -125,6 +177,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     width: 200,
+    borderRadius: 5,
   }
 });
 

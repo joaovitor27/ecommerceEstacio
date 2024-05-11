@@ -36,4 +36,10 @@ export default class CartService extends Firestore<ItemCart> {
   async addItemCard(item: ItemCartBody) {
     await super.add(item);
   }
+
+  async deleteAll(data: ItemCart[]) {
+    for (const item of data) {
+      await super.delete(item.id);
+    }
+  }
 }

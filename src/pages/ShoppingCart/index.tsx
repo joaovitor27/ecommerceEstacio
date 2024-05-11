@@ -1,13 +1,14 @@
 import React, {useCallback, useState} from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../routers/types-router.tsx';
-import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {ActivityIndicator, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Top from '../../Components/Top.tsx';
 import {getCurrentUser} from '../../services/firebase/Auth.tsx';
 import CartService from '../../services/cart.tsx';
 import {ItemCart} from '../../models/ItemCart.tsx';
 import {useFocusEffect} from '@react-navigation/native';
 import ItemCard from './components/itemCard.tsx';
+import BuyService from '../../services/buy.tsx';
 
 
 interface ShoppingCartProps {
@@ -16,16 +17,21 @@ interface ShoppingCartProps {
 
 export default function ShoppingCart({navigation}: ShoppingCartProps) {
   const [cartItems, setCartItems] = useState<ItemCart[]>([]);
+  const [loading, setLoading] = useState(true);
   const serviceCart = new CartService();
 
   useFocusEffect(
     useCallback(() => {
+      setLoading(true);
       serviceCart.findAll({
         fieldPath: 'user',
         opStr: '==',
         value: getCurrentUser()?.uid,
       }).then((result) => {
+        setLoading(false);
         setCartItems(result);
+      }).catch((error) => {
+        console.error(error);
       });
     }, [])
   );
@@ -68,34 +74,60 @@ export default function ShoppingCart({navigation}: ShoppingCartProps) {
     return item?.product?.image ? {uri: item?.product.image} : require('../../assets/profile.png');
   }
 
+  function finish() {
+    const buyService = new BuyService();
+    const buy = {
+      user: getCurrentUser()?.uid as string,
+      products: cartItems.map((item) => {
+        return {
+          product: item.product.id,
+          quantity: item.quantity,
+        }
+      }),
+      date: new Date(),
+      total: total,
+    };
+
+    buyService.add(buy).then(() => {
+      serviceCart.deleteAll(cartItems).then(() => {
+        navigation.navigate('MyPurchases');
+      });
+    });
+  }
+
   return (
     <>
       <Top title={'Carrrinho'} subtitle={'Confira os produtos que você adicionou ao carrinho!'}/>
       <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.scrollViewContent}>
-          {(cartItems.length === 0) ? (
-            <Text style={styles.cartEmpty}>Seu carrinho está vazio!</Text>
-          ) : (
-            cartItems.map((item) => (
-              <ItemCard navigation={navigation}
-                        item={item}
-                        getImage={getImage}
-                        getUnidatePrice={getUnidatePrice}
-                        decrementQuantity={decrementQuantity}
-                        incrementQuantity={incrementQuantity}
-                        removeItem={removeItem}
-                        key={item.id}/>
-            ))
-          )}
-        </ScrollView>
-        <View style={styles.summary}>
-          <View style={styles.summaryContainer}>
-            <Text style={styles.summaryText}>Total: R$ {total.toFixed(2)}</Text>
-          </View>
-          <TouchableOpacity style={styles.checkoutButton}>
-            <Text style={styles.checkoutText}>Finalizar compra</Text>
-          </TouchableOpacity>
-        </View>
+        {loading ? <ActivityIndicator size="large"/> : (
+          <>
+            <ScrollView contentContainerStyle={styles.scrollViewContent}>
+              {(cartItems.length === 0) ? (
+                <Text style={styles.cartEmpty}>Seu carrinho está vazio!</Text>
+              ) : (
+                cartItems.map((item) => (
+                  <ItemCard navigation={navigation}
+                            item={item}
+                            getImage={getImage}
+                            getUnidatePrice={getUnidatePrice}
+                            decrementQuantity={decrementQuantity}
+                            incrementQuantity={incrementQuantity}
+                            removeItem={removeItem}
+                            key={item.id}/>
+                ))
+              )}
+            </ScrollView>
+            <View style={styles.summary}>
+              <View style={styles.summaryContainer}>
+                <Text style={styles.summaryText}>Total: R$ {total.toFixed(2)}</Text>
+              </View>
+              <TouchableOpacity style={cartItems.length !== 0 ? styles.checkoutButton : styles.checkoutButtonDisabled}
+                                onPress={finish} disabled={cartItems.length === 0}>
+                <Text style={styles.checkoutText}>Finalizar compra</Text>
+              </TouchableOpacity>
+            </View>
+          </>
+        )}
       </View>
     </>
   );
@@ -111,9 +143,10 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    justifyContent: 'center',
+    flexGrow: 1,
     paddingHorizontal: 20,
     paddingTop: 20,
-    position: 'relative',
   },
   scrollViewContent: {
     paddingBottom: 50,
@@ -140,6 +173,14 @@ const styles = StyleSheet.create({
   },
   checkoutButton: {
     backgroundColor: '#008080',
+    padding: 20,
+    alignItems: 'center',
+    borderRadius: 5,
+    marginBottom: 20,
+  },
+
+  checkoutButtonDisabled: {
+    backgroundColor: '#ccc',
     padding: 20,
     alignItems: 'center',
     borderRadius: 5,

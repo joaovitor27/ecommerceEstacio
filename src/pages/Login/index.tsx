@@ -3,7 +3,7 @@ import {StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native'
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../routers/types-router.tsx';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {getCurrentUser, login} from '../../services/firebase/Auth.tsx';
+import {login} from '../../services/firebase/Auth.tsx';
 
 interface LoginProps {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -15,10 +15,6 @@ export default function Login({navigation}: LoginProps) {
   const [showPassword, setShowPassword] = React.useState(false);
   const [emailError, setEmailError] = React.useState('');
   const [passwordError, setPasswordError] = React.useState('');
-
-  if (getCurrentUser()) {
-    navigation.navigate('Tab');
-  }
 
   const handleEmailChange = (text: string) => {
     setEmail(text);
