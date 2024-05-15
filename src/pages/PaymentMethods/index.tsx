@@ -146,9 +146,11 @@ const styles = StyleSheet.create({
   type: {
     fontSize: 16,
     fontWeight: 'bold',
+    color: '#5d5c5c'
   },
   details: {
     fontSize: 14,
+    color: '#838080'
   },
   centeredView: {
     flex: 1,

@@ -83,17 +83,22 @@ const AddAddressScreen: React.FC = ({navigation}: any) => {
           onChangeText={(value) => handleChange('zipCode', value)}
           value={address.zipCode}
           keyboardType="numeric"
+          placeholderTextColor={'#333'}
         />
-        <Text style={styles.label}>Estado</Text>
-        <Picker
-          selectedValue={address.state}
-          style={styles.input}
-          onValueChange={(itemValue, itemIndex) => handleChange('state', itemValue)}
-        >
-          {statesWithPlaceholder.map((state, index) => (
-            <Picker.Item key={index} label={state} value={state}/>
-          ))}
-        </Picker>
+        <View style={styles.containerPicker}>
+          <Text style={styles.labelPicker}>Estado</Text>
+          <View style={styles.pickerContainer}>
+            <Picker
+              selectedValue={address.state}
+              style={styles.picker}
+              onValueChange={(itemValue, itemIndex) => handleChange('state', itemValue)}
+            >
+              {statesWithPlaceholder.map((state) => (
+                <Picker.Item key={state} label={state} value={state}/>
+              ))}
+            </Picker>
+          </View>
+        </View>
 
         <Text style={styles.label}>Cidade</Text>
         <TextInput
@@ -146,6 +151,24 @@ const styles = StyleSheet.create({
   scrollViewContainer: {
     padding: 20,
   },
+  containerPicker: {
+    marginBottom: 16,
+  },
+  labelPicker: {
+    fontSize: 16,
+    marginBottom: 8,
+    color: '#333',
+    fontWeight: 'bold',
+  },
+  pickerContainer: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 4,
+  },
+  picker: {
+    height: 50,
+    width: '100%',
+  },
   buttonSave: {
     backgroundColor: '#008080',
     color: '#fff',
@@ -161,18 +184,21 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     marginBottom: 5,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    color: '#333'
   },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 15,
+    justifyContent: 'space-between'
   },
   fieldContainer: {
     flexDirection: 'column',
   },
   flexLarge: {
-    flex: 3, // Maior parte do espaço
+    flex: 2, // Maior parte do espaço
+    paddingRight: 8
   },
   flexSmall: {
     flex: 1, // Menor parte do espaço
@@ -184,6 +210,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ddd',
     borderRadius: 4,
+    color: '#333'
   },
   button: {
     marginBottom: 10,
