@@ -65,16 +65,20 @@ const PaymentMethods = () => {
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <TextInput
+                aria-label="Tipo de Cartão"
                 placeholder="Tipo de Cartão"
                 style={styles.input}
                 value={newCardType}
                 onChangeText={setNewCardType}
+                placeholderTextColor={'#333'}
               />
               <TextInput
+                aria-label="Detalhes do Cartão"
                 placeholder="Detalhes do Cartão"
                 style={styles.input}
                 value={newCardDetails}
                 onChangeText={setNewCardDetails}
+                placeholderTextColor={'#333'}
               />
               <View style={styles.alinghItems}>
                 <View>
@@ -180,6 +184,7 @@ const styles = StyleSheet.create({
     padding: 10,
     width: 200,
     borderRadius: 5,
+    color: '#333'
   }
 });
 

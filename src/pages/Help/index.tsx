@@ -149,6 +149,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     paddingVertical: 5,
     paddingHorizontal: 10,
+    color: '#666',
   },
 });
 

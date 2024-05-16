@@ -94,7 +94,7 @@ const AddAddressScreen: React.FC = ({navigation}: any) => {
               onValueChange={(itemValue, itemIndex) => handleChange('state', itemValue)}
             >
               {statesWithPlaceholder.map((state) => (
-                <Picker.Item key={state} label={state} value={state}/>
+                <Picker.Item key={state} label={state} value={state} color={'#333'}/>
               ))}
             </Picker>
           </View>
@@ -164,10 +164,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 4,
+    color: '#333',
   },
   picker: {
     height: 50,
     width: '100%',
+    color: '#333',
   },
   buttonSave: {
     backgroundColor: '#008080',
