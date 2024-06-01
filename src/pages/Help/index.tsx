@@ -35,7 +35,7 @@ const Help: React.FC<HelpProps> = () => {
   const faqs: FAQItemProps[] = [
     {
       question: 'Como entro em contato com alguém de sua equipe?',
-      answer: 'Você pode ligar para o número de telefone (86)12345-6789'
+      answer: 'Você pode ligar para o número de telefone (86)12345-6788'
     },
     {
       question: 'Quais são os métodos de pagamento aceitos?',
